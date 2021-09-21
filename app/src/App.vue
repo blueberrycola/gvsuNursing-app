@@ -1,16 +1,25 @@
 <template>
   <div id="app">
-    <h1>Hello World</h1>
+    <Homepage/>
+    <commentRating/>
+    <Button/>
+
   </div>
 </template>
 
 <script>
+import commentRating from './components/commentAndRating.vue'
+import Button from './components/Button.vue'
+import Homepage from './components/homePage.vue'
+
 
 export default {
   name: 'App',
   components: {
-    
-  }
+    commentRating,
+    Button,
+    Homepage
+  },
 }
 </script>
 
