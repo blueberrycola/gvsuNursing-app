@@ -1,15 +1,43 @@
 <template>
   <div id="app">
-    <h1>Hello World</h1>
+    <Questions :questions="Questions"/>
+    <Button text = "Submit"></Button>
   </div>
 </template>
 
 <script>
+import Button from './components/Button.vue'
+import Questions from './components/questions.vue'
+
 
 export default {
   name: 'App',
+
   components: {
-    
+    Button,
+    Questions,
+  },
+  data(){
+    return{
+      Questions: []
+    }
+  },
+  created(){
+    this.Questions = [
+      {
+        id: 1,
+        text: 'Do you plan to pursue a graduate degree?',
+      },
+      {
+        id: 2,
+        text: 'Do you have any organizational requirements for future studies?'
+      },
+      {
+        id: 3,
+        text: 'Are you undecided on your future plans at this time?'
+      }
+
+    ]
   }
 }
 </script>
