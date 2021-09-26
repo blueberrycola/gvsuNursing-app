@@ -1,6 +1,6 @@
 <template>
-    <button @click=onClick() class="btn">
-        {{ text }}
+    <button @click=submitForm() class="btn">
+       {{ text }}
     </button>
 </template>
 
@@ -9,12 +9,12 @@ export default {
     name: 'Button',
     props: {
         text: String,
-        color: String
-        
+        color: String,     
     },
     methods: {
-        onClick() {
-            console.log('clicc');
+        submitForm() {
+            
+
         }
     }
 }

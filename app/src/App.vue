@@ -1,21 +1,24 @@
 <template>
   <div id="app">
     <Questions :questions="Questions"/>
-    <Button text = "Submit"></Button>
+    <Button text="Submit"></Button>
+    <commentRating/>
+
   </div>
 </template>
 
 <script>
-import Button from './components/Button.vue'
+import commentRating from './components/commentAndRating.vue'
 import Questions from './components/questions.vue'
+import Button from './components/Button.vue'
 
 
 export default {
   name: 'App',
-
   components: {
-    Button,
+    commentRating,
     Questions,
+    Button,
   },
   data(){
     return{
@@ -36,10 +39,10 @@ export default {
         id: 3,
         text: 'Are you undecided on your future plans at this time?'
       }
-
     ]
   }
 }
+
 </script>
 
 <style>
