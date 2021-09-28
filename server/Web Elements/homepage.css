@@ -4,7 +4,19 @@ body {
 }
 nav {
 	border-bottom: black ridge 5px;
+	font-size: 18px;
+	outline: none;
 }
 div.imghold {
-
+	
+}
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;	
+}
+img.logo{
+	width: 430.5px;
+	height: 264px;
 }
