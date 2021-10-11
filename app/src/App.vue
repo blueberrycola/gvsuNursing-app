@@ -1,14 +1,14 @@
 <template>
   <div id="app">
+    
     <Questions :questions="Questions"/>
     <Button text="Submit"></Button>
-    <commentRating/>
 
   </div>
 </template>
 
 <script>
-import commentRating from './components/commentAndRating.vue'
+
 import Questions from './components/questions.vue'
 import Button from './components/Button.vue'
 
@@ -16,7 +16,6 @@ import Button from './components/Button.vue'
 export default {
   name: 'App',
   components: {
-    commentRating,
     Questions,
     Button,
   },
@@ -27,18 +26,18 @@ export default {
   },
   created(){
     this.Questions = [
+      //FUTURE PLANS
       {
         id: 1,
-        text: 'Do you plan to pursue a graduate degree?',
-      },
-      {
-        id: 2,
-        text: 'Do you have any organizational requirements for future studies?'
-      },
-      {
-        id: 3,
-        text: 'Are you undecided on your future plans at this time?'
+        text: 'All questions have moved to treeDisplay.vue, this is now used for homepage',
       }
+      //ORGANIZATIONAL RESOURCES
+      //todo: Affiliation input, one question per page, progress bar, affiliation, 5 star rating, last updated
+      //gvsu branding include but for all, robert talbot gvsu math example https://rtalbert.org/about/, gvsu stock imgs,
+      //spam filter, adminstration tool, digital hosting cloud, 
+
+
+
     ]
   }
 }
