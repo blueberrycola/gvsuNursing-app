@@ -27,7 +27,7 @@ def ok200(c, file_address):
 		f.close()
 		response = 'HTTP/1.1 200 OK\n\n'
 		c.sendall(response.encode())
-		c.sendall(content.encode())
+		c.sendall(content)
 	except FileNotFoundError:
 		error404(c)
 	
@@ -36,8 +36,12 @@ def newThread(c):
 	print(msg)
 	
 	headers = msg.split('\n')
-	endpoint = headers[0].split()
+	endpoint = headers[0].split()[1]
+	print('\n\n\n')
+	print(endpoint)
 	file_address = findPage(endpoint)
+	print('\n\n\n')
+	print(file_address)
 	if(file_address == ""):
 		error404(c)
 	ok200(c, file_address)
