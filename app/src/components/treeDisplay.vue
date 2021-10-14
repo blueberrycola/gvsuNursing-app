@@ -1,20 +1,52 @@
 <template>
-  <div id = "tree">
-      <button id="submit">Submit Decisions</button>
-      <button id="next">Next Question</button>
-      <div id="results"></div>
-      <commentRating/>
+  <div id = "decision-tree-page">
+      <div class="tree-container">
+            <div id="tree-header">
+                <h1>Decision Tree</h1>
+            </div>
+            <div id="main">
+                <div class="box-question">
+                    Question
+                </div>
+                <div class="box-suggestion">
+                    <ul>
+                        <li>
+                            Suggestion A
+                        </li>
+                        <li>Suggestion B</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="tree-footer">
+      </div>
+
+
+      </div>
+      
+    
   </div>
+  
 </template>
 
 <script>
-import commentRating from './commentAndRating.vue'
+/***************************************************************************
+TODO:
+    //Quiz Display {CurrentQuestion, Next, Prev, Submit, showResults()}
+    //Revise questions (doc posted in capstone shared)
+    //Code logic into choosing questions 
+    ie: if you prefer online classes then dont suggest in person bsn's
+    //Results Display {
+        we need data to show different bsn options (strouse or web scraping)
+
+    }
+**********************************************************************/
+
+
 export default {
-    name: treeDisplay,
-    components: {
-        commentRating,
-    },
+    name: 'treeDisplay',
+    
 }
+/*
 //Global consts
 const treeContainer = document.getElementById('tree');
 const resultsContainer = document.getElementById('results');
@@ -122,12 +154,100 @@ function buildTree() {
 function showResults() {
 
 }
+*/
 //on submit show results
-submitButton.addEventListener('click', showResults);
+//submitButton.addEventListener('click', showResults);
 
 
 </script>
 
 <style>
+.decision-tree-page {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+}
+
+.tree-container {
+    display: flex;
+    width: 40%;
+    height: 85%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-top: 40px;
+    margin-left: 560px;
+    flex-flow: column;
+    text-align: center;
+    border: 1px solid #e7eae0;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.tree-header {
+    display: flex;
+    width: 100%;
+    height: 20%;
+    border-bottom: 1px solid wheat;
+    justify-content: center;
+    align-items: center;
+    background-color: wheat;
+    border-radius: 10px 10px 0px 0px;
+
+}
+.main{
+    display: flex;
+    width: 100%;
+    height: 70%;
+    flex-flow: column;
+    margin: auto;
+}
+.tree-footer{
+    display: flex;
+    width: 100%;
+    height: 10%;
+    justify-content: center;
+    border-top: 1px solid skyblue;
+    background-color: wheat;
+    border-radius: 0px 0px 10px 10px;
+}
+.box-question {
+    margin-top: 20px;
+}
+
+.box-suggestions {
+    display: flex;
+    width: 100%;
+    height: 10%;
+    justify-content: center;
+    border-top: 1px solid wheat;
+    background-color: wheat;
+    border-radius: 0px 0px 10px 10px;
+}
+ul{
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    margin: 80px;
+    padding: 0;
+    flex-flow: column;
+}
+ul li {
+    list-style: none;
+    line-height: 2;
+    justify-content: center;
+    border: 1px solid blue;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+
+}
+
+
+
+
+
+
 
 </style>
