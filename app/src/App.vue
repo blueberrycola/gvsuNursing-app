@@ -1,23 +1,21 @@
 <template>
   <div id="app">
     
-    <Questions :questions="Questions"/>
-    <Button text="Submit"></Button>
+    <treeDisplay/>
 
   </div>
 </template>
 
 <script>
 
-import Questions from './components/questions.vue'
-import Button from './components/Button.vue'
+
+import treeDisplay from './components/treeDisplay.vue';
 
 
 export default {
   name: 'App',
   components: {
-    Questions,
-    Button,
+    treeDisplay,
   },
   data(){
     return{
@@ -25,12 +23,7 @@ export default {
     }
   },
   created(){
-    this.Questions = [
-      //FUTURE PLANS
-      {
-        id: 1,
-        text: 'All questions have moved to treeDisplay.vue, this is now used for homepage',
-      }
+    
       //ORGANIZATIONAL RESOURCES
       //todo: Affiliation input, one question per page, progress bar, affiliation, 5 star rating, last updated
       //gvsu branding include but for all, robert talbot gvsu math example https://rtalbert.org/about/, gvsu stock imgs,
@@ -38,19 +31,16 @@ export default {
 
 
 
-    ]
+    
   }
 }
 
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.app {
+  font-family: 'Poppins', sans-serif;
+  margin: auto;
+  letter-spacing: 2px;
 }
 </style>
