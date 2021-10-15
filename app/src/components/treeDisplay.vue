@@ -4,20 +4,24 @@
             <div id="tree-header">
                 <h1>Decision Tree</h1>
             </div>
-            <div id="main">
+            <div id="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
-                    Question
+                    <h2>Question {{b}}/{{questions.length}}</h2>
+                    <p>{{element.question}}</p>
                 </div>
                 <div class="box-suggestion">
                     <ul>
-                        <li>
-                            Suggestion A
+                        <li v-for="(item,index) in element.answers" :key="index">
+                            {{item.answer}}
                         </li>
-                        <li>Suggestion B</li>
                     </ul>
                 </div>
             </div>
             <div id="tree-footer">
+                <div class="box-button">
+                    <button>Next</button>
+                </div>
+            
       </div>
 
 
@@ -31,7 +35,7 @@
 <script>
 /***************************************************************************
 TODO:
-    //Quiz Display {CurrentQuestion, Next, Prev, Submit, showResults()}
+    //Quiz Display {Next, Prev, Submit, showResults()}
     //Revise questions (doc posted in capstone shared)
     //Code logic into choosing questions 
     ie: if you prefer online classes then dont suggest in person bsn's
@@ -40,11 +44,108 @@ TODO:
 
     }
 **********************************************************************/
-
+const YESNO = [
+    
+    {answer: "Yes"},
+    {answer: "No"},
+    
+];
 
 export default {
     name: 'treeDisplay',
-    
+    data() {
+        return {
+        questions:[
+            {
+                question: "Do you plan to pursue a graduate degree?",
+                answers: YESNO,
+        
+            },
+            {
+                question: "Do you have any organizational requirements for future studies?",
+                answers: YESNO,
+                
+            },
+            {
+                question: "Are you undecided on your future plans at this time?",
+                answers: YESNO
+                
+            },
+            {
+                question: "Do you have a stable internet connection? Do you like remote learning?",
+                answers: YESNO,
+            },
+            {
+                question: "What type of learner are you?",
+                answers: {
+                    a: "Audio",
+                    b: "Visual",
+                    c: "Both",
+                },
+            },
+            {
+                question: "Do you like group projects?",
+                answers: YESNO,
+            },
+            {
+                question: "Do you like enjoy the benefits of online learning but still want some face to face interaction?",
+                answers: YESNO,
+            },
+            {
+                question: "What is your age?", //FIXME
+                answers: YESNO,
+            },
+            {
+                question: "Do you possess any scholarships?", 
+                answers: YESNO,
+            },
+            {
+                question: "Do you finance your own education?", 
+                answers: YESNO,
+            },
+            {
+                question: "Do you have any financial loans for college",
+                answers: YESNO,
+            },
+            {
+                question: "Repayment terms for loan?",
+                answers: YESNO,
+            },
+            
+            {
+                question: "Does your employer pay for your college?",
+                answers: YESNO,
+            },
+            {
+                question: "Are you a transfer student",
+                answers: YESNO,
+            },
+            {
+                question: "Do you have an affiliation or concurrent enrollment agreements",
+                answers: YESNO,
+            },
+            {
+                question: "how many liberal arts credits do you have?", //FIXME
+                answers: YESNO,
+            },
+            
+            {
+                question: "Do prefer the faster paced semesters?",
+                answers: YESNO,
+            },
+            {
+                question: "Do you possess a fixed or flexible work schedule?",
+                answers: [
+                    {answer: "Fixed"},
+                    {answer: "Flexible"},
+                ],
+            },
+  
+                ],
+  a:0,
+  b:1,
+  }
+  }
 }
 /*
 //Global consts
@@ -52,96 +153,8 @@ const treeContainer = document.getElementById('tree');
 const resultsContainer = document.getElementById('results');
 const submitButton = document.getElementById('submit');
 const nextButton = document.getElementById('next');
-const YESNO = {
-    a: "Yes",
-    b: "No"
-};
-const myQuestions = [
-  {
-    question: "Do you plan to pursue a graduate degree?",
-    answers: YESNO,
-    
-  },
-  {
-    question: "Do you have any organizational requirements for future studies?",
-    answers: YESNO,
-    
-  },
-  {
-    question: "Are you undecided on your future plans at this time?",
-    answers: YESNO
-    
-  },
-  {
-      question: "Do you have a stable internet connection? Do you like remote learning?",
-      answers: YESNO,
-  },
-  {
-      question: "What type of learner are you?",
-      answers: {
-          a: "Audio",
-          b: "Visual",
-          c: "Both",
-      },
-  },
-  {
-      question: "Do you like group projects?",
-      answers: YESNO,
-  },
-  {
-      question: "Do you like enjoy the benefits of online learning but still want some face to face interaction?",
-      answers: YESNO,
-  },
-  {
-      question: "What is your age?", //FIXME
-      answers: YESNO,
-  },
-  {
-      question: "Do you possess any scholarships?", 
-      answers: YESNO,
-  },
-  {
-      question: "Do you finance your own education?", 
-      answers: YESNO,
-  },
-  {
-      question: "Do you have any financial loans for college",
-      answers: YESNO,
-  },
-  {
-      question: "Repayment terms for loan?",
-      answers: YESNO,
-  },
-  
-  {
-      question: "Does your employer pay for your college?",
-      answers: YESNO,
-  },
-  {
-      question: "Are you a transfer student",
-      answers: YESNO,
-  },
-  {
-      question: "Do you have an affiliation or concurrent enrollment agreements",
-      answers: YESNO,
-  },
-  {
-      question: "how many liberal arts credits do you have?", //FIXME
-      answers: YESNO,
-  },
-  
-  {
-      question: "Do prefer the faster paced semesters?",
-      answers: YESNO,
-  },
-  {
-      question: "Do you possess a fixed or flexible work schedule?",
-      answers: {
-          a: "Fixed",
-          b: "Flexible",
-      },
-  }
-];
+
+
 
 
 function buildTree() {
@@ -243,7 +256,25 @@ ul li {
     cursor: pointer;
 
 }
-
+li:hover {
+    background-color: skyblue;
+}
+.box-button {
+    display: flex;
+    width: 100%;
+}
+.box-button button {
+    width: 150px;
+    height: 35px;
+    outline: none;
+    border: 0;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 15px;
+    margin: auto;
+    background: grey;
+}
 
 
 
