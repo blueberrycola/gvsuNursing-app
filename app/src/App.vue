@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    
-    <treeDisplay/>
-
+    <div class="container" >
+    <treeDisplay />
+    </div>
   </div>
 </template>
 
@@ -11,11 +11,10 @@
 
 import treeDisplay from './components/treeDisplay.vue';
 
-
 export default {
   name: 'App',
   components: {
-    treeDisplay,
+    treeDisplay
   },
   data(){
     return{
