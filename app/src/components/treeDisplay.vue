@@ -1,26 +1,29 @@
 <template>
   <div id = "decision-tree-page">
-      <div class="tree-container">
-            <div id="tree-header">
-                <h1>Decision Tree</h1>
+      <Header />
+      <div class="flex flex-col w-2/5 relative m-auto text-center bg-white shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
+            <div class="center border-black">
+                <h1 class = "text-center text-3xl font-bold pt-5">Decision Tree</h1>
             </div>
-            <div id="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
+            <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
-                    <h2>Question {{b}}/{{questions.length}}</h2>
-                    <p>{{element.question}}</p>
+                    <h2 class = "font-bold text-xl pb-8">Question {{a + 1}}/{{questions.length}}</h2>
+                    <p class = "pb-10">{{element.question}}</p>
                 </div>
                 <div class="box-suggestion">
-                    <ul>
-                        <li v-for="(item,index) in element.answers" :key="index">
+                    <ul class = "flex flex-col w-full justify-center pb-10">
+                        <li class = "" v-for="(item,index) in element.answers" :key="index">
                             {{item.answer}}
                         </li>
                     </ul>
                 </div>
+                <div class="box-button pb-10">
+                    <button @click="subtract">Previous</button>
+                    <button @click="add">Next</button>
+                </div>
             </div>
             <div id="tree-footer">
-                <div class="box-button">
-                    <button>Next</button>
-                </div>
+                
             
       </div>
 
@@ -51,99 +54,185 @@ const YESNO = [
     
 ];
 
+import Header from "./Header.vue"
+
 export default {
     name: 'treeDisplay',
+
+    components: {
+        Header
+    },
+    
+    methods: {
+        async created(){
+            console.log(this.data())
+        },
+        add(){
+            this.a += 1
+            this.b += 1
+        },
+        subtract(){
+            this.a -= 1
+            this.b -= 1
+        }
+    },
     data() {
         return {
+        a:0,
+        b:1,
         questions:[
+            //
+            //Orange section (Future Plans)
             {
-                question: "Do you plan to pursue a graduate degree?",
+                question: "Are you considering continuing your education at the graduate level, and earning an MSN, DNP, or PHD?",
                 answers: YESNO,
         
             },
             {
-                question: "Do you have any organizational requirements for future studies?",
+                question: "Does your employer or prospective employer require you to earn your BSN from an accredited program?",
                 answers: YESNO,
                 
             },
+            //
+            //Blue section (Delivery Format)
             {
-                question: "Are you undecided on your future plans at this time?",
+                question: "Are you comfortable and adept at using technology, and do you have the necessary tools to learn online, including an up-to-date computer, software, and internet connection?",
                 answers: YESNO
                 
             },
             {
-                question: "Do you have a stable internet connection? Do you like remote learning?",
-                answers: YESNO,
+                question: "Do you work better with self-scheduling or set schedules?",
+                answers: [
+                    {answer: "Self-scheduling"},
+                    {answer: "Set scheduling"},
+                ],
             },
             {
                 question: "What type of learner are you?",
-                answers: {
-                    a: "Audio",
-                    b: "Visual",
-                    c: "Both",
-                },
-            },
-            {
-                question: "Do you like group projects?",
-                answers: YESNO,
-            },
-            {
-                question: "Do you like enjoy the benefits of online learning but still want some face to face interaction?",
-                answers: YESNO,
-            },
-            {
-                question: "What is your age?", //FIXME
-                answers: YESNO,
-            },
-            {
-                question: "Do you possess any scholarships?", 
-                answers: YESNO,
-            },
-            {
-                question: "Do you finance your own education?", 
-                answers: YESNO,
-            },
-            {
-                question: "Do you have any financial loans for college",
-                answers: YESNO,
-            },
-            {
-                question: "Repayment terms for loan?",
-                answers: YESNO,
-            },
-            
-            {
-                question: "Does your employer pay for your college?",
-                answers: YESNO,
-            },
-            {
-                question: "Are you a transfer student",
-                answers: YESNO,
-            },
-            {
-                question: "Do you have an affiliation or concurrent enrollment agreements",
-                answers: YESNO,
-            },
-            {
-                question: "how many liberal arts credits do you have?", //FIXME
-                answers: YESNO,
-            },
-            
-            {
-                question: "Do prefer the faster paced semesters?",
-                answers: YESNO,
-            },
-            {
-                question: "Do you possess a fixed or flexible work schedule?",
                 answers: [
-                    {answer: "Fixed"},
-                    {answer: "Flexible"},
+                    {answer: "Audio"},
+                    {answer: "Visual"},
+                    {answer: "Both"},
                 ],
+            },
+            {
+                question: "Do you prefer working alone and completing your work at your own rate?",
+                answers: YESNO,
+            },
+            {
+                question: "Are there group projects required in my required courses? If so, how will I collaborate with other students in completing these requirements?",
+                answers: YESNO,
+            },
+            //
+            //Purple section (Transfer Credits)
+            {
+                question: "Will credits from my ADN program transfer to the program of interest? If so, how many credits transfer?", 
+                answers: YESNO,
+            },
+            {
+                question: "What other general education courses will I need to take to fulfill graduation requirements?", 
+                //todo: figure out how to answer this
+            },
+            {
+                question: "Is there an affiliation or concurrent enrollment agreement between my ADN program and other RN to BSN program? How do I participate in these programs?", 
+                answers: YESNO,
+                //todo: needs elaboration
+            },
+            //
+            //Tan section (Time)
+            {
+                question: "Are the courses four to eight weeks in length (half a semester) or a full traditional semester or term length (semesters are typically 15 weeks in length)?",
+                answers: [
+                    {answer: "Four to Eight Weeks"},
+                    {answer: "Full 15 Week Semester"}
+                ],
+            },
+            {
+                question: "If taking online classes, are there synchronous class sessions that are mandatory to attend? If so, will my work schedule or other responsibilities interfere with this type of class format?",
+                answers: YESNO,
+            },
+            
+            {
+                question: "What are the application deadlines and costs? What do I need to submit for a complete application? How does this fit with my personal timeline?",
+                //Todo: Figure out how to answer / quantify this question
+            },
+            {
+                question: "Is my work schedule flexible or fixed?",
+                answers: [
+                    {answer: "Flexible"},
+                    {answer: "Fixed"},
+                ],
+            },
+            {
+                question: "Will I be able to commute to campus regularly for face-to-face courses, and how much time does the commute require?",
+                answers: YESNO,
+                //Todo: commute time answer
+            },
+            {
+                question: "What family or social responsibilities will be competing for my time in completing my coursework? What support systems do I have that can assist in my success in the program? Can any of my responsibilities be modified or incorporated into my coursework?", //FIXME
+                //Todo: figure out how to quantify this               
+            },
+            //
+            //Salmon Section (Financial Considerations)
+            {
+                question: "How will you finance your education if you plan to pay for it yourself?",
+                //Todo: fill in the blank section
+            },
+            {
+                question: "What scholarships or loans are available to help finance my education and what are their requirements/timelines?",
+                //Todo: fill in the blank section
+            },
+            {
+                question: "How are courses reimbursed if paid for by employer? What are the requirements, documents, or timelines to consider?",
+                //Todo: fill in the blank section
+            },
+            {
+                question: "For employer paid benefits, is there a repayment term if you do not complete your degree?",
+                //Todo: fill in the blank section
+            },
+            {
+                question: "Is there a work requirement for every semester you receive tuition reimbursement? If so, do you need to stay in the same role or can you change roles with your new degree?",
+                answers: YESNO,
+                //Todo: fill in the blank section
+            },
+            //
+            //Yellow Section (Organizational Resources)
+            {
+                question: "What type of academic support (writing, tutoring, etc.) is available and how is it delivered (on site, online, combination)?",
+                //Todo: fill in the blank section
+            },
+            {
+                question: "Who is my advisor, and do I keep a consistent advisor throughout the program? How often do I meet with my advisor?",
+                //Todo: fill in the blank section
+            },
+            {
+                question: "Does this university or school offer support to Veterans?",
+                answers: YESNO,
+            },
+            {
+                question: "What types and formats of support are available to students with known or suspected disabilities? How do I access these supports?",
+                //Todo: fill in the blank section
+            },
+            {
+                question: "Are there identity support groups available that fit my identity? How do I become involved in these groups?",
+                answers: YESNO,
+                //Todo: fill in the blank section
+            },
+            {
+                question: "What type and when is technology support available? Are there technology requirements for the university or nursing program? What type of computer, software, or internet access do I need to be successful?",
+                //Todo: fill in the blank section
+            },
+            {
+                question: "What type of LMS does this school use? Am I familiar with it and if not, what types of tutorial/support is available to help learn the LMS?",
+                //Todo: fill in the blank section
+            },
+            {
+                question: "What are the clinical or experiential learning experiences? How many credits or hours are required each semester, and what types of settings are used for these experiences? Are the preceptors or locational provided for me or do I need to secure them?",
+                //Todo: fill in the blank section
             },
   
                 ],
-  a:0,
-  b:1,
+
   }
   }
 }
@@ -175,6 +264,8 @@ function showResults() {
 </script>
 
 <style>
+
+
 .decision-tree-page {
     display: flex;
     width: 100%;
@@ -275,7 +366,6 @@ li:hover {
     margin: auto;
     background: grey;
 }
-
 
 
 
