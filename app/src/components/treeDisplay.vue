@@ -7,7 +7,7 @@
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
-                    <h2 class = "font-bold text-xl pb-8">Question {{b}}/{{questions.length}}</h2>
+                    <h2 class = "font-bold text-xl pb-8">Question {{a + 1}}/{{questions.length}}</h2>
                     <p class = "pb-10">{{element.question}}</p>
                 </div>
                 <div class="box-suggestion">
@@ -17,12 +17,13 @@
                         </li>
                     </ul>
                 </div>
+                <div class="box-button pb-10">
+                    <button @click="subtract">Previous</button>
+                    <button @click="add">Next</button>
+                </div>
             </div>
             <div id="tree-footer">
-                <div class="box-button pb-10">
-                    <button @click="onClick()" :style="{
-                        background: color }">Next</button>
-                </div>
+                
             
       </div>
 
@@ -65,10 +66,20 @@ export default {
     methods: {
         async created(){
             console.log(this.data())
+        },
+        add(){
+            this.a += 1
+            this.b += 1
+        },
+        subtract(){
+            this.a -= 1
+            this.b -= 1
         }
     },
     data() {
         return {
+        a:0,
+        b:1,
         questions:[
             //
             //Orange section (Future Plans)
@@ -91,18 +102,18 @@ export default {
             },
             {
                 question: "Do you work better with self-scheduling or set schedules?",
-                answers: {
-                    a: "Self-scheduling",
-                    b: "Set scheduling",
-                },
+                answers: [
+                    {answer: "Self-scheduling"},
+                    {answer: "Set scheduling"},
+                ],
             },
             {
                 question: "What type of learner are you?",
-                answers: {
-                    a: "Audio",
-                    b: "Visual",
-                    c: "Both",
-                },
+                answers: [
+                    {answer: "Audio"},
+                    {answer: "Visual"},
+                    {answer: "Both"},
+                ],
             },
             {
                 question: "Do you prefer working alone and completing your work at your own rate?",
@@ -131,10 +142,10 @@ export default {
             //Tan section (Time)
             {
                 question: "Are the courses four to eight weeks in length (half a semester) or a full traditional semester or term length (semesters are typically 15 weeks in length)?",
-                answers: {
-                    a: "Four to Eight Weeks",
-                    b: "Full 15 Week Semester"
-                },
+                answers: [
+                    {answer: "Four to Eight Weeks"},
+                    {answer: "Full 15 Week Semester"}
+                ],
             },
             {
                 question: "If taking online classes, are there synchronous class sessions that are mandatory to attend? If so, will my work schedule or other responsibilities interfere with this type of class format?",
@@ -147,10 +158,10 @@ export default {
             },
             {
                 question: "Is my work schedule flexible or fixed?",
-                answers: {
-                    a: "Flexible",
-                    b: "Fixed",
-                },
+                answers: [
+                    {answer: "Flexible"},
+                    {answer: "Fixed"},
+                ],
             },
             {
                 question: "Will I be able to commute to campus regularly for face-to-face courses, and how much time does the commute require?",
@@ -221,8 +232,7 @@ export default {
             },
   
                 ],
-  a:0,
-  b:1,
+
   }
   }
 }
