@@ -11,9 +11,12 @@
                 </div>
                 <div class="box-suggestion">
                     <ul class = "flex flex-col w-full justify-center pb-10">
-                        <li class = "" v-on:click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
+                        <li class = "" v-on:click="storeAnswer(b,item.answer, fitb)" v-for="(item,index) in element.answers" :key="index">
                             {{item.answer}}
                         </li>
+                        <textarea id="fitb" class="border-b-8 shadow-2xl bg-gray-100" rows="4" cols="50" placeholder="Additional details">
+                            
+                        </textarea>
                     </ul>
                 </div>
                 <div class="box-button pb-10">
@@ -22,9 +25,10 @@
                 </div>
             </div>
             <div id="tree-footer">
-                
-            
-      </div>
+                     
+
+
+            </div>
 
 
       </div>
@@ -63,6 +67,7 @@ export default {
         return {
         a:0,
         b:1,
+        fitb:Document.fitb,
         questions:[
             //
             //Orange section (Future Plans)
@@ -223,27 +228,34 @@ export default {
             console.log(this.data())
         },
         add(){
+            if(this.b < this.questions.length){
             this.a += 1
             this.b += 1
             //After going on to the next question entry is pushed into results
             results.push(entry);
             console.log(results)
+            }
         },
         subtract(){
+            if(this.a > -1){
             this.a -= 1
             this.b -= 1
             //If user changes mind results are popped() and resubmitted, FIXME: going back gets rid of all questions before that.
             results.pop();
+            }
         },
         //Pushes user choice in results global array. SEE LINE 15
         //FIXME: 
-        storeAnswer(index, str) {
+        storeAnswer(index, str, fitb) {
             entry = {
                 q: index,
                 a: str,
+                f: fitb
             }
             console.log(entry);
-        }
+        },
+
+
     },
 }
 /*
