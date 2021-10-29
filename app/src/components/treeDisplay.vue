@@ -3,7 +3,6 @@
       <Header />
       <div class="flex flex-col w-2/5 relative m-auto text-center bg-white shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
             <div class="center border-black">
-                <h1 class = "text-center text-3xl font-bold pt-5">Decision Tree</h1>
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
@@ -12,7 +11,7 @@
                 </div>
                 <div class="box-suggestion">
                     <ul class = "flex flex-col w-full justify-center pb-10">
-                        <li class = "" v-on:click="storeAnswer(index,item.answer)" v-for="(item,index) in element.answers" :key="index">
+                        <li class = "" v-on:click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
                             {{item.answer}}
                         </li>
                     </ul>
@@ -43,7 +42,6 @@ TODO:
     ie: if you prefer online classes then dont suggest in person bsn's
     //Results Display {
         we need data to show different bsn options (strouse or web scraping)
-
     }
 **********************************************************************/
 const YESNO = [
@@ -55,14 +53,9 @@ const YESNO = [
 var entry = null;
 //Global array for storing user answers and what question they did
 var results = [];
-
-
-
 import Header from "./Header.vue"
-
 export default {
     name: 'treeDisplay',
-
     components: {
         Header
     },
@@ -121,7 +114,7 @@ export default {
             },
             {
                 question: "What other general education courses will I need to take to fulfill graduation requirements?", 
-                //todo: figure out how to answer this
+                
             },
             {
                 question: "Is there an affiliation or concurrent enrollment agreement between my ADN program and other RN to BSN program? How do I participate in these programs?", 
@@ -252,37 +245,27 @@ export default {
             console.log(entry);
         }
     },
-
 }
-
 /*
 //Global consts
 const treeContainer = document.getElementById('tree');
 const resultsContainer = document.getElementById('results');
 const submitButton = document.getElementById('submit');
 const nextButton = document.getElementById('next');
-
-
 function showResults() {
-
 }
 */
 //on submit show results
 //submitButton.addEventListener('click', showResults);
-
-
 </script>
 
 <style>
-
-
 .decision-tree-page {
     display: flex;
     width: 100%;
     height: 100%;
     justify-content: center;
 }
-
 .tree-container {
     display: flex;
     width: 40%;
@@ -308,7 +291,6 @@ function showResults() {
     align-items: center;
     background-color: wheat;
     border-radius: 10px 10px 0px 0px;
-
 }
 .main{
     display: flex;
@@ -329,7 +311,6 @@ function showResults() {
 .box-question {
     margin-top: 20px;
 }
-
 .box-suggestions {
     display: flex;
     width: 100%;
@@ -355,12 +336,10 @@ ul li {
     margin-bottom: 20px;
     border-radius: 15px;
     cursor: pointer;
-
 }
 li:hover {
     background-color: skyblue;
 }
-
 .box-button {
     display: flex;
     width: 100%;
@@ -377,9 +356,4 @@ li:hover {
     margin: auto;
     background: grey;
 }
-
-
-
-
-
 </style>
