@@ -12,7 +12,7 @@
                 </div>
                 <div class="box-suggestion">
                     <ul class = "flex flex-col w-full justify-center pb-10">
-                        <li class = "" v-for="(item,index) in element.answers" :key="index">
+                        <li class = "" v-on:click="storeAnswer(index,item.answer)" v-for="(item,index) in element.answers" :key="index">
                             {{item.answer}}
                         </li>
                     </ul>
@@ -38,8 +38,7 @@
 <script>
 /***************************************************************************
 TODO:
-    //Quiz Display {Next, Prev, Submit, showResults()}
-    //Revise questions (doc posted in capstone shared)
+    //Quiz Display { showResults()}
     //Code logic into choosing questions 
     ie: if you prefer online classes then dont suggest in person bsn's
     //Results Display {
@@ -53,6 +52,11 @@ const YESNO = [
     {answer: "No"},
     
 ];
+var entry = null;
+//Global array for storing user answers and what question they did
+var results = [];
+
+
 
 import Header from "./Header.vue"
 
@@ -62,21 +66,7 @@ export default {
     components: {
         Header
     },
-    
-    methods: {
-        async created(){
-            console.log(this.data())
-        },
-        add(){
-            this.a += 1
-            this.b += 1
-        },
-        subtract(){
-            this.a -= 1
-            this.b -= 1
-        }
-    },
-    data() {
+        data() {
         return {
         a:0,
         b:1,
@@ -231,11 +221,40 @@ export default {
                 //Todo: fill in the blank section
             },
   
-                ],
+            ],
+            
+        }
+    },
+    methods: {
+        async created(){
+            console.log(this.data())
+        },
+        add(){
+            this.a += 1
+            this.b += 1
+            //After going on to the next question entry is pushed into results
+            results.push(entry);
+            console.log(results)
+        },
+        subtract(){
+            this.a -= 1
+            this.b -= 1
+            //If user changes mind results are popped() and resubmitted, FIXME: going back gets rid of all questions before that.
+            results.pop();
+        },
+        //Pushes user choice in results global array. SEE LINE 15
+        //FIXME: 
+        storeAnswer(index, str) {
+            entry = {
+                q: index,
+                a: str,
+            }
+            console.log(entry);
+        }
+    },
 
-  }
-  }
 }
+
 /*
 //Global consts
 const treeContainer = document.getElementById('tree');
@@ -244,15 +263,6 @@ const submitButton = document.getElementById('submit');
 const nextButton = document.getElementById('next');
 
 
-
-
-function buildTree() {
-    const userInput = [];
-    const done = false;
-    const i = 0;
-    console.log(myQuestions[0])
-    
-}
 function showResults() {
 
 }
@@ -350,6 +360,7 @@ ul li {
 li:hover {
     background-color: skyblue;
 }
+
 .box-button {
     display: flex;
     width: 100%;
