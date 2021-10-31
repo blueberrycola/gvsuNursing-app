@@ -11,19 +11,16 @@
                 </div>
                 <div class="box-suggestion">
                     <ul class = "flex flex-col w-full justify-center pb-10">
-                        <li v-on:click="storeAnswer(b,item.answer, fitb)" v-for="(item,index) in element.answers" :key="index">
+                        <li @click="storeAnswer(b,item.answer,fitb)" v-for="(item,index) in element.answers" :key="index">
                             {{item.answer}}
-                            
                         </li>
                         
-                        <textarea v-model="fitb" class="border-b-2 shadow-2xl bg-gray-100" rows="4" cols="50" placeholder="Additional details:">
-
-                        </textarea>
+                        <textarea v-model="fitb" class="shadow-2xl bg-gray-100" rows="4" cols="50" placeholder="Additional details:" ref="fitb"></textarea>
                     </ul>
                 </div>
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
-                    <button class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button class="hover:bg-blue-200" @click="add(); resetInput()">Next</button>
                 </div>
             </div>
             <div id="tree-footer">
@@ -235,6 +232,8 @@ export default {
             this.a += 1
             this.b += 1
             //After going on to the next question entry is pushed into results
+            entry["f"] = this.fitb;
+            this.fitb = "";
             results.push(entry);
             console.log(results)
             }
@@ -248,16 +247,13 @@ export default {
             }
         },
         //Pushes user choice in results global array. SEE LINE 15
-        //FIXME: 
-        storeAnswer(index, str, fitb) {
+        storeAnswer(index, str) {
             entry = {
                 q: index,
                 a: str,
-                f: fitb
             }
             console.log(entry);
-        },
-
+        }
 
     },
 }
@@ -353,10 +349,6 @@ ul li {
     cursor: pointer;
 }
 li:hover {
-    background-color: skyblue;
-}
-
-li:focus {
     background-color: skyblue;
 }
 
