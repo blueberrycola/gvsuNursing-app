@@ -11,20 +11,23 @@
                 </div>
                 <div class="box-suggestion">
                     <ul class = "flex flex-col w-full justify-center pb-10">
-                        <li class = "" v-on:click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
+                        <li @click="storeAnswer(b,item.answer,fitb)" v-for="(item,index) in element.answers" :key="index">
                             {{item.answer}}
                         </li>
+                        
+                        <textarea v-model="fitb" class="shadow-2xl bg-gray-100" rows="4" cols="50" placeholder="Additional details:" ref="fitb"></textarea>
                     </ul>
                 </div>
                 <div class="box-button pb-10">
-                    <button @click="subtract">Previous</button>
-                    <button @click="add">Next</button>
+                    <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
+                    <button class="hover:bg-blue-200" @click="add(); resetInput()">Next</button>
                 </div>
             </div>
             <div id="tree-footer">
-                
-            
-      </div>
+                     
+
+
+            </div>
 
 
       </div>
@@ -63,6 +66,8 @@ export default {
         return {
         a:0,
         b:1,
+        fitb:"",
+        //fitb:document.getElementById("fitb").textContent,
         questions:[
             //
             //Orange section (Future Plans)
@@ -223,20 +228,25 @@ export default {
             console.log(this.data())
         },
         add(){
+            if(this.b < this.questions.length){
             this.a += 1
             this.b += 1
             //After going on to the next question entry is pushed into results
+            entry["f"] = this.fitb;
+            this.fitb = "";
             results.push(entry);
             console.log(results)
+            }
         },
         subtract(){
+            if(this.a > 0){
             this.a -= 1
             this.b -= 1
             //If user changes mind results are popped() and resubmitted, FIXME: going back gets rid of all questions before that.
             results.pop();
+            }
         },
         //Pushes user choice in results global array. SEE LINE 15
-        //FIXME: 
         storeAnswer(index, str) {
             entry = {
                 q: index,
@@ -244,6 +254,7 @@ export default {
             }
             console.log(entry);
         }
+
     },
 }
 /*
@@ -340,6 +351,7 @@ ul li {
 li:hover {
     background-color: skyblue;
 }
+
 .box-button {
     display: flex;
     width: 100%;
