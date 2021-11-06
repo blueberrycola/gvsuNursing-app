@@ -1,7 +1,13 @@
 <template>
   <div id = "decision-tree-page">
       <Header />
-      <div class="flex flex-col w-2/5 relative m-auto text-center bg-white shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
+      <futurePlans />
+      <deliveryFormat />
+      <transferCredits />
+      <timeWizard />
+      <financialConsiderations />
+      <organizationalResources />
+      <!--<div class="flex flex-col w-2/5 relative m-auto text-center bg-white shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
             <div class="center border-black">
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
@@ -10,8 +16,8 @@
                     <p class = "pb-10">{{element.question}}</p>
                 </div>
                 <div class="box-suggestion">
-                    <ul class = "flex flex-col w-full justify-center pb-10">
-                        <li @click="storeAnswer(b,item.answer,fitb)" v-for="(item,index) in element.answers" :key="index">
+                    <ul class ="flex flex-col w-full justify-center pb-10">
+                        <li @click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
                             {{item.answer}}
                         </li>
                         
@@ -20,7 +26,7 @@
                 </div>
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
-                    <button class="hover:bg-blue-200" @click="add(); resetInput()">Next</button>
+                    <button class="hover:bg-blue-200" @click="add()">Next</button>
                 </div>
             </div>
             <div id="tree-footer">
@@ -30,7 +36,7 @@
             </div>
 
 
-      </div>
+      </div>-->
       
     
   </div>
@@ -57,10 +63,26 @@ var entry = null;
 //Global array for storing user answers and what question they did
 var results = [];
 import Header from "./Header.vue"
+import futurePlans from "./futurePlans.vue"
+import deliveryFormat from "./deliveryFormat.vue"
+import transferCredits from "./transferCredits.vue"
+import financialConsiderations from "./financialConsiderations.vue"
+import timeWizard from "./timeWizard.vue"
+import organizationalResources from "./organizationalResources.vue"
+
+
 export default {
     name: 'treeDisplay',
     components: {
-        Header
+        Header,
+        futurePlans,
+        deliveryFormat,
+        transferCredits,
+        timeWizard,
+        financialConsiderations,
+        organizationalResources
+
+
     },
         data() {
         return {
@@ -71,7 +93,7 @@ export default {
         questions:[
             //
             //Orange section (Future Plans)
-            {
+          /*  {
                 question: "Are you considering continuing your education at the graduate level, and earning an MSN, DNP, or PHD?",
                 answers: YESNO,
         
@@ -80,10 +102,10 @@ export default {
                 question: "Does your employer or prospective employer require you to earn your BSN from an accredited program?",
                 answers: YESNO,
                 
-            },
+            },*/
             //
             //Blue section (Delivery Format)
-            {
+            /*{
                 question: "Are you comfortable and adept at using technology, and do you have the necessary tools to learn online, including an up-to-date computer, software, and internet connection?",
                 answers: YESNO
                 
@@ -110,10 +132,10 @@ export default {
             {
                 question: "Are there group projects required in my required courses? If so, how will I collaborate with other students in completing these requirements?",
                 answers: YESNO,
-            },
+            },*/
             //
             //Purple section (Transfer Credits)
-            {
+           /* {
                 question: "Will credits from my ADN program transfer to the program of interest? If so, how many credits transfer?", 
                 answers: YESNO,
             },
@@ -127,8 +149,9 @@ export default {
                 //todo: needs elaboration
             },
             //
+            */
             //Tan section (Time)
-            {
+            /*{
                 question: "Are the courses four to eight weeks in length (half a semester) or a full traditional semester or term length (semesters are typically 15 weeks in length)?",
                 answers: [
                     {answer: "Four to Eight Weeks"},
@@ -159,10 +182,10 @@ export default {
             {
                 question: "What family or social responsibilities will be competing for my time in completing my coursework? What support systems do I have that can assist in my success in the program? Can any of my responsibilities be modified or incorporated into my coursework?", //FIXME
                 //Todo: figure out how to quantify this               
-            },
+            },*/
             //
             //Salmon Section (Financial Considerations)
-            {
+            /*{
                 question: "How will you finance your education if you plan to pay for it yourself?",
                 //Todo: fill in the blank section
             },
@@ -183,7 +206,7 @@ export default {
                 answers: YESNO,
                 //Todo: fill in the blank section
             },
-            //
+            //*/
             //Yellow Section (Organizational Resources)
             {
                 question: "What type of academic support (writing, tutoring, etc.) is available and how is it delivered (on site, online, combination)?",
@@ -348,7 +371,12 @@ ul li {
     border-radius: 15px;
     cursor: pointer;
 }
+
 li:hover {
+    background-color: skyblue;
+}
+
+li:focus-visible{
     background-color: skyblue;
 }
 
