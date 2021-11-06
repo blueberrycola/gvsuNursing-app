@@ -1,44 +1,19 @@
 <template>
   <div id = "decision-tree-page">
       <Header />
-      <futurePlans />
-      <deliveryFormat />
-      <transferCredits />
-      <timeWizard />
-      <financialConsiderations />
-      <organizationalResources />
-      <!--<div class="flex flex-col w-2/5 relative m-auto text-center bg-white shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
-            <div class="center border-black">
-            </div>
-            <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
-                <div class="box-question">
-                    <h2 class = "font-bold text-xl pb-8">Question {{a + 1}}/{{questions.length}}</h2>
-                    <p class = "pb-10">{{element.question}}</p>
-                </div>
-                <div class="box-suggestion">
-                    <ul class ="flex flex-col w-full justify-center pb-10">
-                        <li @click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
-                            {{item.answer}}
-                        </li>
-                        
-                        <textarea v-model="fitb" class="shadow-2xl bg-gray-100" rows="4" cols="50" placeholder="Additional details:" ref="fitb"></textarea>
-                    </ul>
-                </div>
-                <div class="box-button pb-10">
-                    <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
-                    <button class="hover:bg-blue-200" @click="add()">Next</button>
-                </div>
-            </div>
-            <div id="tree-footer">
-                     
-
-
-            </div>
-
-
-      </div>-->
+      <button class="bg-gamboge pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'futurePlans'">Future Plans</button>
+      <futurePlans v-if="activeSet === 'futurePlans'" />
+      <button class="bg-blue-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'deliveryFormat'">Delivery Format</button>
+      <deliveryFormat v-if="activeSet === 'deliveryFormat'" />
+      <button class="bg-purple-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'transferCredits'">Transfer Credits</button>
+      <transferCredits v-if="activeSet === 'transferCredits'"/>
+      <button class="bg-tan pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'time'">Time</button>
+      <timeWizard v-if="activeSet === 'time'"/>
+      <button class="bg-lightSalmon pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'financialConsiderations'">Financial Considerations</button>
+      <financialConsiderations v-if="activeSet === 'financialConsiderations'"/>
+      <button class="bg-yellow-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'organizationalResources'">Organizational Resources</button>
+      <organizationalResources v-if="activeSet === 'organizationalResources'" />
       
-    
   </div>
   
 </template>
@@ -53,12 +28,7 @@ TODO:
         we need data to show different bsn options (strouse or web scraping)
     }
 **********************************************************************/
-const YESNO = [
-    
-    {answer: "Yes"},
-    {answer: "No"},
-    
-];
+
 var entry = null;
 //Global array for storing user answers and what question they did
 var results = [];
@@ -89,160 +59,9 @@ export default {
         a:0,
         b:1,
         fitb:"",
+        activeSet: "",
         //fitb:document.getElementById("fitb").textContent,
-        questions:[
-            //
-            //Orange section (Future Plans)
-          /*  {
-                question: "Are you considering continuing your education at the graduate level, and earning an MSN, DNP, or PHD?",
-                answers: YESNO,
-        
-            },
-            {
-                question: "Does your employer or prospective employer require you to earn your BSN from an accredited program?",
-                answers: YESNO,
-                
-            },*/
-            //
-            //Blue section (Delivery Format)
-            /*{
-                question: "Are you comfortable and adept at using technology, and do you have the necessary tools to learn online, including an up-to-date computer, software, and internet connection?",
-                answers: YESNO
-                
-            },
-            {
-                question: "Do you work better with self-scheduling or set schedules?",
-                answers: [
-                    {answer: "Self-scheduling"},
-                    {answer: "Set scheduling"},
-                ],
-            },
-            {
-                question: "What type of learner are you?",
-                answers: [
-                    {answer: "Audio"},
-                    {answer: "Visual"},
-                    {answer: "Both"},
-                ],
-            },
-            {
-                question: "Do you prefer working alone and completing your work at your own rate?",
-                answers: YESNO,
-            },
-            {
-                question: "Are there group projects required in my required courses? If so, how will I collaborate with other students in completing these requirements?",
-                answers: YESNO,
-            },*/
-            //
-            //Purple section (Transfer Credits)
-           /* {
-                question: "Will credits from my ADN program transfer to the program of interest? If so, how many credits transfer?", 
-                answers: YESNO,
-            },
-            {
-                question: "What other general education courses will I need to take to fulfill graduation requirements?", 
-                
-            },
-            {
-                question: "Is there an affiliation or concurrent enrollment agreement between my ADN program and other RN to BSN program? How do I participate in these programs?", 
-                answers: YESNO,
-                //todo: needs elaboration
-            },
-            //
-            */
-            //Tan section (Time)
-            /*{
-                question: "Are the courses four to eight weeks in length (half a semester) or a full traditional semester or term length (semesters are typically 15 weeks in length)?",
-                answers: [
-                    {answer: "Four to Eight Weeks"},
-                    {answer: "Full 15 Week Semester"}
-                ],
-            },
-            {
-                question: "If taking online classes, are there synchronous class sessions that are mandatory to attend? If so, will my work schedule or other responsibilities interfere with this type of class format?",
-                answers: YESNO,
-            },
-            
-            {
-                question: "What are the application deadlines and costs? What do I need to submit for a complete application? How does this fit with my personal timeline?",
-                //Todo: Figure out how to answer / quantify this question
-            },
-            {
-                question: "Is my work schedule flexible or fixed?",
-                answers: [
-                    {answer: "Flexible"},
-                    {answer: "Fixed"},
-                ],
-            },
-            {
-                question: "Will I be able to commute to campus regularly for face-to-face courses, and how much time does the commute require?",
-                answers: YESNO,
-                //Todo: commute time answer
-            },
-            {
-                question: "What family or social responsibilities will be competing for my time in completing my coursework? What support systems do I have that can assist in my success in the program? Can any of my responsibilities be modified or incorporated into my coursework?", //FIXME
-                //Todo: figure out how to quantify this               
-            },*/
-            //
-            //Salmon Section (Financial Considerations)
-            /*{
-                question: "How will you finance your education if you plan to pay for it yourself?",
-                //Todo: fill in the blank section
-            },
-            {
-                question: "What scholarships or loans are available to help finance my education and what are their requirements/timelines?",
-                //Todo: fill in the blank section
-            },
-            {
-                question: "How are courses reimbursed if paid for by employer? What are the requirements, documents, or timelines to consider?",
-                //Todo: fill in the blank section
-            },
-            {
-                question: "For employer paid benefits, is there a repayment term if you do not complete your degree?",
-                //Todo: fill in the blank section
-            },
-            {
-                question: "Is there a work requirement for every semester you receive tuition reimbursement? If so, do you need to stay in the same role or can you change roles with your new degree?",
-                answers: YESNO,
-                //Todo: fill in the blank section
-            },
-            //*/
-            //Yellow Section (Organizational Resources)
-            {
-                question: "What type of academic support (writing, tutoring, etc.) is available and how is it delivered (on site, online, combination)?",
-                //Todo: fill in the blank section
-            },
-            {
-                question: "Who is my advisor, and do I keep a consistent advisor throughout the program? How often do I meet with my advisor?",
-                //Todo: fill in the blank section
-            },
-            {
-                question: "Does this university or school offer support to Veterans?",
-                answers: YESNO,
-            },
-            {
-                question: "What types and formats of support are available to students with known or suspected disabilities? How do I access these supports?",
-                //Todo: fill in the blank section
-            },
-            {
-                question: "Are there identity support groups available that fit my identity? How do I become involved in these groups?",
-                answers: YESNO,
-                //Todo: fill in the blank section
-            },
-            {
-                question: "What type and when is technology support available? Are there technology requirements for the university or nursing program? What type of computer, software, or internet access do I need to be successful?",
-                //Todo: fill in the blank section
-            },
-            {
-                question: "What type of LMS does this school use? Am I familiar with it and if not, what types of tutorial/support is available to help learn the LMS?",
-                //Todo: fill in the blank section
-            },
-            {
-                question: "What are the clinical or experiential learning experiences? How many credits or hours are required each semester, and what types of settings are used for these experiences? Are the preceptors or locational provided for me or do I need to secure them?",
-                //Todo: fill in the blank section
-            },
-  
-            ],
+
             
         }
     },
