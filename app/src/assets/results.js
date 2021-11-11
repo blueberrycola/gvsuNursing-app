@@ -6,22 +6,22 @@
 class Result {
     constructor() {
         this.entry = {
-            orange: {
+            futurePlans: {
                 answers: [],
             },
-            blue: {
+            deliveryFormat: {
                 answers: [],
             },
-            purple: {
+            transferCredits: {
                 answers: [],
             },
-            tan: {
+            time: {
                 answers: [],
             },
-            salmon: {
+            financialConsiderations: {
                 answers: [],
             },
-            yellow: {
+            organizationalResources: {
                 answers: [],
             },
         };
@@ -67,4 +67,5 @@ class Result {
 //setAnswer('orange', '0:foo')
 //replaceAnswer('orange', '0:fooo');
 //getAnswer('orange', 0);
+
 export default Results;
