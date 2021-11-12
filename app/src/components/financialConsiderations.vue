@@ -6,6 +6,24 @@
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
                     <h2 class = "font-bold text-xl pb-8">Question {{a + 1}}/{{questions.length}}</h2>
+                        <div class="relative pt-1">
+                            <div class="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
+                                <div
+                                    v-bind:style="{
+                                        width: b/questions.length*100 + '%' 
+                                     }"
+                                        class="
+                                            shadow-none
+                                            flex flex-col
+                                            text-center
+                                            whitespace-nowrap
+                                        text-white
+                                        justify-center
+                                      bg-red-800
+                                        "
+                                    ></div>
+                            </div>
+                        </div>
                     <p class = "pb-10">{{element.question}}</p>
                 </div>
                 <div class="box-suggestion">
@@ -28,17 +46,14 @@
 </template>
 
 <script>
-
 const YESNO = [
     
     {answer: "Yes"},
     {answer: "No"},
     
 ];
-
 var entry = {};
 var results = [];
-
     export default {
         name: 'time',
         data(){

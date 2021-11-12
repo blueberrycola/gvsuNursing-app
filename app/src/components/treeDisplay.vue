@@ -1,19 +1,32 @@
 <template>
-  <div id = "decision-tree-page">
-      <Header />
+  <div id = "decision-tree-page" class="bg-gvsuBlue">
+      <Header />  
+
+    
       <button class="bg-gamboge pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'futurePlans'">Future Plans</button>
-      <futurePlans v-if="activeSet === 'futurePlans'" />
-      <button class="bg-blue-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'deliveryFormat'">Delivery Format</button>
-      <deliveryFormat v-if="activeSet === 'deliveryFormat'" />
-      <button class="bg-purple-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'transferCredits'">Transfer Credits</button>
-      <transferCredits v-if="activeSet === 'transferCredits'"/>
-      <button class="bg-tan pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'time'">Time</button>
-      <timeWizard v-if="activeSet === 'time'"/>
-      <button class="bg-lightSalmon pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'financialConsiderations'">Financial Considerations</button>
-      <financialConsiderations v-if="activeSet === 'financialConsiderations'"/>
-      <button class="bg-yellow-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'organizationalResources'">Organizational Resources</button>
-      <organizationalResources v-if="activeSet === 'organizationalResources'" />
       
+      <futurePlans v-if="activeSet === 'futurePlans'" />
+    
+      <button class="bg-blue-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'deliveryFormat'">Delivery Format</button>
+     
+      <deliveryFormat v-if="activeSet === 'deliveryFormat'" />
+  
+      <button class="bg-purple-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'transferCredits'">Transfer Credits</button>
+  
+      <transferCredits v-if="activeSet === 'transferCredits'"/>
+      
+      <button class="bg-tan pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'time'">Time Considerations</button>
+     
+      <timeWizard v-if="activeSet === 'time'"/>
+     
+      <button class="bg-lightSalmon pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'financialConsiderations'">Financial Considerations</button>
+
+      <financialConsiderations v-if="activeSet === 'financialConsiderations'"/>
+   
+      <button class="bg-yellow-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'organizationalResources'">Organizational Resources</button>
+
+      <organizationalResources v-if="activeSet === 'organizationalResources'" />
+   
   </div>
   
 </template>
@@ -52,7 +65,6 @@ export default {
         financialConsiderations,
         organizationalResources
 
-
     },
         data() {
         return {
@@ -61,8 +73,6 @@ export default {
         fitb:"",
         activeSet: "",
         //fitb:document.getElementById("fitb").textContent,
-
-            
         }
     },
     methods: {
@@ -182,7 +192,7 @@ ul{
     flex-flow: column;
 }
 ul li {
-    list-style: none;
+    list-style-type: none; 
     line-height: 2;
     justify-content: center;
     border: 1px solid blue;
@@ -190,6 +200,7 @@ ul li {
     border-radius: 15px;
     cursor: pointer;
 }
+
 
 li:hover {
     background-color: skyblue;
