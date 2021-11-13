@@ -5,7 +5,27 @@
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
-                    <h2 class = "font-bold text-xl pb-8">Question {{a + 1}}/{{questions.length}}</h2>
+                    <h2 class = "font-bold text-xl pb-8">Question {{a + 1}}/{{questions.length}}
+                        <div class="relative pt-1">
+                            <div class="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
+                                <div
+                                    v-bind:style="{
+                                        width: b/questions.length*100 + '%' 
+                                     }"
+                                        class="
+                                            shadow-none
+                                            flex flex-col
+                                            text-center
+                                            whitespace-nowrap
+                                          text-white
+                                            justify-center
+                                          bg-black
+                                            pb-8
+                                        "
+                                    ></div>
+                            </div>
+                        </div>
+                    </h2>
                     <p class = "pb-10">{{element.question}}</p>
                 </div>
                 <div class="box-suggestion">
@@ -28,17 +48,14 @@
 </template>
 
 <script>
-
 const YESNO = [
     
     {answer: "Yes"},
     {answer: "No"},
     
 ];
-
 var entry = {};
-var results = [];
-
+let futurePlans = [];
     export default {
         name: 'futurePlans',
         data(){
@@ -70,8 +87,6 @@ var results = [];
                 //After going on to the next question entry is pushed into results
                 entry["f"] = this.fitb;
                 this.fitb = "";
-                results.push(entry);
-                console.log(results)
                 }   
             },
             subtract(){
@@ -79,16 +94,30 @@ var results = [];
             this.a -= 1
             this.b -= 1
             //If user changes mind results are popped() and resubmitted, FIXME: going back gets rid of all questions before that.
-            results.pop();
             }
             },
             storeAnswer(index, str, fitb) {
-                entry = {
+                var entry = {
                     q: index,
                     a: str,
                     f: fitb
                 }
-                console.log(entry);
+                var replace = false;
+                //Replaces question if already submitted.
+                for(var i = 0; i < futurePlans.length; i++) {
+                    if(entry.q == futurePlans[i].q) {
+                        console.log('replace question!')
+                        futurePlans[i] = entry;
+                        replace = true;
+                    }
+                }
+                //Only pushes if it hasnt been replaced.
+                if(!replace) {
+                    futurePlans.push(entry);
+                }
+                
+                
+                console.log(futurePlans);
             }
         }
     }
