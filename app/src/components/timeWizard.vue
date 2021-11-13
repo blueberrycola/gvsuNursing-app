@@ -53,7 +53,6 @@ const YESNO = [
     {answer: "No"},
     
 ];
-var entry = {};
 let time = [];
     export default {
         name: 'timeWizard',
@@ -105,9 +104,26 @@ let time = [];
                 this.a += 1
                 this.b += 1
                 //After going on to the next question entry is pushed into results
-                entry["f"] = this.fitb;
-                this.fitb = "";
+                
+                var index = this.a;
+                if(time[index] != null) {
+                    time[index].fitb = this.fitb
+                } else {
+                    console.log("null found!");
+                    var json = {
+                        q:this.a,
+                        a:"Additional Detail Question",
+                        fitb: this.fitb,
+                    }
+                    time.push(json);
                 }
+                console.log(time);
+                //Done so it doesnt keep the previous answer
+                this.fitb = "";
+                
+                
+                
+                }   
             },
             subtract(){
             if(this.a > 0){

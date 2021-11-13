@@ -53,7 +53,6 @@ const YESNO = [
     {answer: "No"},
     
 ];
-var entry = {};
 let transferCredits = [];
     export default {
         name: 'transferCredits',
@@ -85,8 +84,25 @@ let transferCredits = [];
                 this.a += 1
                 this.b += 1
                 //After going on to the next question entry is pushed into results
-                entry["f"] = this.fitb;
+                
+                var index = this.a;
+                if(transferCredits[index] != null) {
+                    transferCredits[index].fitb = this.fitb
+                } else {
+                    console.log("null found!");
+                    var json = {
+                        q:this.a,
+                        a:"Additional Detail Question",
+                        fitb: this.fitb,
+                    }
+                    transferCredits.push(json);
+                }
+                console.log(transferCredits);
+                //Done so it doesnt keep the previous answer
                 this.fitb = "";
+                
+                
+                
                 }   
             },
             subtract(){

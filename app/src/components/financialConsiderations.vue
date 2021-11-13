@@ -52,8 +52,7 @@ const YESNO = [
     {answer: "No"},
     
 ];
-var entry = {};
-var results = [];
+let financialConsiderations = [];
     export default {
         name: 'time',
         data(){
@@ -93,27 +92,55 @@ var results = [];
                 this.a += 1
                 this.b += 1
                 //After going on to the next question entry is pushed into results
-                entry["f"] = this.fitb;
+                
+                var index = this.a;
+                if(financialConsiderations[index] != null) {
+                    financialConsiderations[index].fitb = this.fitb
+                } else {
+                    console.log("null found!");
+                    var json = {
+                        q:this.a,
+                        a:"Additional Detail Question",
+                        fitb: this.fitb,
+                    }
+                    financialConsiderations.push(json);
+                }
+                console.log(financialConsiderations);
+                //Done so it doesnt keep the previous answer
                 this.fitb = "";
-                results.push(entry);
-                console.log(results)
+                
+                
+                
                 }   
             },
             subtract(){
             if(this.a > 0){
             this.a -= 1
             this.b -= 1
-            //If user changes mind results are popped() and resubmitted, FIXME: going back gets rid of all questions before that.
-            results.pop();
             }
             },
             storeAnswer(index, str, fitb) {
-                entry = {
+                var entry = {
                     q: index,
                     a: str,
                     f: fitb
                 }
-                console.log(entry);
+                var replace = false;
+                //Replaces question if already submitted.
+                for(var i = 0; i < financialConsiderations.length; i++) {
+                    if(entry.q == financialConsiderations[i].q) {
+                        console.log('replace question!')
+                        financialConsiderations[i] = entry;
+                        replace = true;
+                    }
+                }
+                //Only pushes if it hasnt been replaced.
+                if(!replace) {
+                    financialConsiderations.push(entry);
+                }
+                
+                
+                console.log(financialConsiderations);
             }
         }
     }

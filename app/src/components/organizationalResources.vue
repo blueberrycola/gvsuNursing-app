@@ -55,7 +55,6 @@ const YESNO = [
     {answer: "No"},
     
 ];
-var entry = {};
     export default {
         name: 'timeWizard',
         data(){
@@ -107,8 +106,24 @@ var entry = {};
                 this.a += 1
                 this.b += 1
                 //After going on to the next question entry is pushed into results
-                entry["f"] = this.fitb;
+                
+                var index = this.a;
+                if(organizationalResources[index] != null) {
+                    organizationalResources[index].fitb = this.fitb
+                } else {
+                    console.log("null found!");
+                    var json = {
+                        q:this.a,
+                        a:"Additional Detail Question",
+                        fitb: this.fitb,
+                    }
+                    organizationalResources.push(json);
+                }
+                console.log(organizationalResources);
+                //Done so it doesnt keep the previous answer
                 this.fitb = "";
+                
+                
                 
                 }   
             },
