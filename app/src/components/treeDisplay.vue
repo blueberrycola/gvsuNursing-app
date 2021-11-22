@@ -3,29 +3,29 @@
       <Header />  
 
     
-      <button class="bg-gamboge pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'futurePlans'">Future Plans</button>
+      <button class="bg-gamboge pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'futurePlans', compileData()">Future Plans</button>
       
-      <futurePlans v-if="activeSet === 'futurePlans'" />
+      <futurePlans @update:answer="storeAnswers" v-if="activeSet === 'futurePlans'" />
     
       <button class="bg-blue-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'deliveryFormat'">Delivery Format</button>
      
-      <deliveryFormat v-if="activeSet === 'deliveryFormat'" />
+      <deliveryFormat @update:answer="storeAnswers" v-if="activeSet === 'deliveryFormat'" />
   
       <button class="bg-purple-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'transferCredits'">Transfer Credits</button>
   
-      <transferCredits v-if="activeSet === 'transferCredits'"/>
+      <transferCredits @update:answer="storeAnswers" v-if="activeSet === 'transferCredits'"/>
       
       <button class="bg-tan pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'time'">Time Considerations</button>
      
-      <timeWizard v-if="activeSet === 'time'"/>
+      <timeWizard @update:answer="storeAnswers" v-if="activeSet === 'time'"/>
      
       <button class="bg-lightSalmon pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'financialConsiderations'">Financial Considerations</button>
 
-      <financialConsiderations v-if="activeSet === 'financialConsiderations'"/>
+      <financialConsiderations @update:answer="storeAnswers" v-if="activeSet === 'financialConsiderations'"/>
    
-      <button class="bg-yellow-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'organizationalResources'">Organizational Resources</button>
+      <button class="bg-yellow-300 pt-5 pb-5 pr-5 pl-5 focus:outline-none focus:ring-2 focus:ring-black" @click="activeSet = 'organizationalResources'">Organizational Resources</button>
 
-      <organizationalResources v-if="activeSet === 'organizationalResources'" />
+      <organizationalResources @update:answer="storeAnswers" v-if="activeSet === 'organizationalResources'" />
    
   </div>
   
@@ -42,9 +42,13 @@ TODO:
     }
 **********************************************************************/
 
-var entry = null;
 //Global array for storing user answers and what question they did
-var results = [];
+var deliveryFormatResults = [];
+var financialConsiderationsResults = [];
+var futurePlansResults = [];
+var timeWizardResults = [];
+var organizationalResourcesResults = [];
+var transferCreditsResults = [];
 import Header from "./Header.vue"
 import futurePlans from "./futurePlans.vue"
 import deliveryFormat from "./deliveryFormat.vue"
@@ -71,40 +75,41 @@ export default {
         a:0,
         b:1,
         fitb:"",
-        activeSet: "",
-        //fitb:document.getElementById("fitb").textContent,
+        activeSet: ""
         }
     },
     methods: {
         async created(){
             console.log(this.data())
         },
-        add(){
-            if(this.b < this.questions.length){
-            this.a += 1
-            this.b += 1
-            //After going on to the next question entry is pushed into results
-            entry["f"] = this.fitb;
-            this.fitb = "";
-            results.push(entry);
-            console.log(results)
+
+        //Stores all component data into a JSON
+        storeAnswers(answers){
+            if(this.activeSet == "deliveryFormat"){
+                deliveryFormatResults = answers;
+                console.log(deliveryFormatResults);
             }
-        },
-        subtract(){
-            if(this.a > 0){
-            this.a -= 1
-            this.b -= 1
-            //If user changes mind results are popped() and resubmitted, FIXME: going back gets rid of all questions before that.
-            results.pop();
+            if(this.activeSet == "financialConsiderations"){
+                financialConsiderationsResults = answers;
+                console.log(financialConsiderationsResults);
             }
-        },
-        //Pushes user choice in results global array. SEE LINE 15
-        storeAnswer(index, str) {
-            entry = {
-                q: index,
-                a: str,
+            if(this.activeSet == "futurePlans"){
+                futurePlansResults = answers;
+                console.log(futurePlansResults);
             }
-            console.log(entry);
+            if(this.activeSet == "timeWizard"){
+                timeWizardResults = answers;
+                console.log(timeWizardResults);
+            }
+            if(this.activeSet == "organizationalResources"){
+                organizationalResourcesResults = answers;
+                console.log(organizationalResourcesResults);
+            }
+            if(this.activeSet == "transferCredits"){
+                transferCreditsResults = answers;
+                console.log(transferCreditsResults);
+            }
+
         }
 
     },

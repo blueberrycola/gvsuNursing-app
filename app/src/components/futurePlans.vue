@@ -39,9 +39,13 @@
                 </div>
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
-                    <button class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
                 </div>
             </div>
+        <div>
+            {{futurePlansAnswers}}
+        </div>
 
 
       </div>
@@ -62,6 +66,8 @@ let futurePlans = [];
             a:0,
             b:1,
             fitb:"",
+            futurePlansAnswers:futurePlans,
+            futurePlansResults:[],
             questions:[
             //
             //Orange section (Future Plans)
@@ -85,8 +91,8 @@ let futurePlans = [];
                 this.b += 1
                 //After going on to the next question entry is pushed into results
                 
-                var index = this.a;
-                if(futurePlans[index] != null) {
+                var index = this.a-1;
+                if(futurePlans[index] != null || index <= futurePlans.length-1) {
                     futurePlans[index].fitb = this.fitb
                 } else {
                     console.log("null found!");
@@ -97,7 +103,9 @@ let futurePlans = [];
                     }
                     futurePlans.push(json);
                 }
-                console.log(futurePlans);
+                //console.log(futurePlans);
+
+                this.$emit('update:answer', this.futurePlansAnswers);
                 //Done so it doesnt keep the previous answer
                 this.fitb = "";
                 
@@ -132,8 +140,36 @@ let futurePlans = [];
                     futurePlans.push(entry);
                 }
                 
+                this.$emit('update:answer', this.futurePlansAnswers);
+                //console.log(futurePlans);
+            },
+            organizeResults(){
+                var index = this.a;
+                if(futurePlans[index] != null || index <= futurePlans.length-1) {
+                    futurePlans[index].fitb = this.fitb
+                } else {
+                    console.log("null found!");
+                    var json = {
+                        q:this.a,
+                        a:"Fill In The Blank Question",
+                        fitb: this.fitb,
+                    }
+                    futurePlans.push(json);
+                }
+
+                this.$emit('update:answer', this.futurePlansAnswers);
+
+                this.fitb = "";
                 
-                console.log(futurePlans);
+
+                if(this.futurePlansAnswers.length == this.questions.length && this.futurePlansResults.length == 0){
+                    for(var i = 0; i < this.questions.length; i++){
+                        this.futurePlansResults.push(this.questions[i].question);
+                        this.futurePlansResults.push(this.futurePlansAnswers[i]);
+                    }
+                    //console.log(this.futurePlansResults);
+                    this.$emit('update:answer', this.futurePlansResults);
+                }
             }
         }
     }

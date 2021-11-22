@@ -38,10 +38,13 @@
                 </div>
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
-                    <button class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
                 </div>
             </div>
 
+
+        <div>{{transferCreditsAnswers}}</div>
 
       </div>
 </template>
@@ -61,6 +64,8 @@ let transferCredits = [];
             a:0,
             b:1,
             fitb:"",
+            transferCreditsAnswers:transferCredits,
+            transferCreditsResults:[],
             questions:[
             //
             //Orange section (Future Plans)
@@ -85,8 +90,8 @@ let transferCredits = [];
                 this.b += 1
                 //After going on to the next question entry is pushed into results
                 
-                var index = this.a;
-                if(transferCredits[index] != null) {
+                var index = this.a-1;
+                if(transferCredits[index] != null || index <= transferCredits.length-1) {
                     transferCredits[index].fitb = this.fitb
                 } else {
                     console.log("null found!");
@@ -97,7 +102,8 @@ let transferCredits = [];
                     }
                     transferCredits.push(json);
                 }
-                console.log(transferCredits);
+                //console.log(transferCredits);
+                this.$emit('update:answer', this.transferCreditsAnswers);
                 //Done so it doesnt keep the previous answer
                 this.fitb = "";
                 
@@ -132,8 +138,36 @@ let transferCredits = [];
                     transferCredits.push(entry);
                 }
                 
+                this.$emit('update:answer', this.transferCreditsAnswers);
+                //console.log(transferCredits);
+            },
+            organizeResults(){
+                var index = this.a;
+                if(transferCredits[index] != null || index <= transferCredits.length-1) {
+                    transferCredits[index].fitb = this.fitb
+                } else {
+                    console.log("null found!");
+                    var json = {
+                        q:this.a,
+                        a:"Fill In The Blank Question",
+                        fitb: this.fitb,
+                    }
+                    transferCredits.push(json);
+                }
+
+                this.$emit('update:answer', this.transferCreditsAnswers);
+
+                this.fitb = "";
                 
-                console.log(transferCredits);
+
+                if(this.transferCreditsAnswers.length == this.questions.length && this.transferCreditsResults.length == 0){
+                    for(var i = 0; i < this.questions.length; i++){
+                        this.transferCreditsResults.push(this.questions[i].question);
+                        this.transferCreditsResults.push(this.transferCreditsAnswers[i]);
+                    }
+                    console.log(this.transferCreditsResults);
+                    this.$emit('update:answer', this.transferCreditsResults);
+                }
             }
         }
     }
