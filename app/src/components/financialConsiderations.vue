@@ -5,7 +5,7 @@
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
-                    <h2 class = "font-bold text-xl pb-8">Question {{a + 1}}/{{questions.length}}</h2>
+                    <h2 class = "font-bold text-xl pb-8">Question {{a + 1}}/{{questions.length}}
                         <div class="relative pt-1">
                             <div class="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
                                 <div
@@ -24,6 +24,7 @@
                                     ></div>
                             </div>
                         </div>
+                    </h2>
                     <p class = "pb-10">{{element.question}}</p>
                 </div>
                 <div class="box-suggestion">
@@ -37,8 +38,13 @@
                 </div>
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
-                    <button class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
                 </div>
+            </div>
+
+            <div>
+                {{financialConsiderationsAnswers}}
             </div>
 
 
@@ -54,12 +60,14 @@ const YESNO = [
 ];
 let financialConsiderations = [];
     export default {
-        name: 'time',
+        name: 'financialConsiderations',
         data(){
             return{
             a:0,
             b:1,
             fitb:"",
+            financialConsiderationsAnswers:financialConsiderations,
+            financialConsiderationsResults:[],
             questions:[
             //
             {
@@ -93,8 +101,8 @@ let financialConsiderations = [];
                 this.b += 1
                 //After going on to the next question entry is pushed into results
                 
-                var index = this.a;
-                if(financialConsiderations[index] != null) {
+                var index = this.a-1;
+                if(financialConsiderations[index] != null || index <= financialConsiderations.length-1) {
                     financialConsiderations[index].fitb = this.fitb
                 } else {
                     console.log("null found!");
@@ -105,7 +113,9 @@ let financialConsiderations = [];
                     }
                     financialConsiderations.push(json);
                 }
-                console.log(financialConsiderations);
+                //console.log(financialConsiderations);
+
+                this.$emit('update:answer', this.financialConsiderationsAnswers);
                 //Done so it doesnt keep the previous answer
                 this.fitb = "";
                 
@@ -139,9 +149,38 @@ let financialConsiderations = [];
                     financialConsiderations.push(entry);
                 }
                 
+                this.$emit('update:answer', this.financialConsiderationsAnswers);
+                //console.log(financialConsiderations);
+            },
+            organizeResults(){
+                var index = this.a;
+                if(financialConsiderations[index] != null || index <= financialConsiderations.length-1) {
+                    financialConsiderations[index].fitb = this.fitb
+                } else {
+                    console.log("null found!");
+                    var json = {
+                        q:this.a,
+                        a:"Fill In The Blank Question",
+                        fitb: this.fitb,
+                    }
+                    financialConsiderations.push(json);
+                }
+
+                this.$emit('update:answer', this.financialConsiderationsAnswers);
+
+                this.fitb = "";
                 
-                console.log(financialConsiderations);
+
+                if(this.financialConsiderationsAnswers.length == this.questions.length && this.financialConsiderationsResults.length == 0){
+                    for(var i = 0; i < this.questions.length; i++){
+                        this.financialConsiderationsResults.push(this.questions[i].question);
+                        this.financialConsiderationsResults.push(this.financialConsiderationsAnswers[i]);
+                    }
+                    //console.log(this.financialConsiderationsResults);
+                    this.$emit('update:answer', this.financialConsiderationsResults)
+                }
             }
+
         }
     }
 </script>

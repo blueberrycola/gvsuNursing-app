@@ -39,12 +39,13 @@
                 </div>
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
-                    <button class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
                 </div>
             </div>
             <div id="tree-footer">
                      
-
+                     {{deliveryFormatAnswers}}
 
             </div>
 
@@ -67,6 +68,8 @@ let deliveryFormat = [];
             a:0,
             b:1,
             fitb:"",
+            deliveryFormatAnswers:deliveryFormat,
+            deliveryFormatResults:[],
             questions:[
             //
             //Orange section (Future Plans)
@@ -87,7 +90,7 @@ let deliveryFormat = [];
                 answers: [
                     {answer: "Audio"},
                     {answer: "Visual"},
-                    {answer: "Both"},
+                    {answer: "Both Audio and Visual"},
                 ],
             },
             {
@@ -98,6 +101,7 @@ let deliveryFormat = [];
                 question: "Are there group projects required in my required courses? If so, how will I collaborate with other students in completing these requirements?",
                 answers: YESNO,
             },
+
             ]
             }
         },
@@ -109,22 +113,27 @@ let deliveryFormat = [];
                 //After going on to the next question entry is pushed into results
                 
                 var index = this.a-1;
-                if(deliveryFormat[index] != null) {
+
+                if(deliveryFormat[index] != null || index <= deliveryFormat.length-1) {
+
                     deliveryFormat[index].fitb = this.fitb
                 } else {
                     console.log("null found!");
                     var json = {
                         q:this.a,
-                        a:"Additional Detail Question",
+                        a:"Fill In The Blank Question",
+
                         fitb: this.fitb,
                     }
                     deliveryFormat.push(json);
                 }
-                console.log(deliveryFormat);
+
+                //console.log(deliveryFormat);
+                //this.deliveryFormatAnswers = deliveryFormat;
+                //console.log(this.deliveryFormatAnswers);
+                this.$emit('update:answer', this.deliveryFormatAnswers);
                 //Done so it doesnt keep the previous answer
-                this.fitb = "";
-                
-                
+                this.fitb = "";   
                 
                 }   
             },
@@ -135,11 +144,10 @@ let deliveryFormat = [];
             //If user changes mind results are popped() and resubmitted, FIXME: going back gets rid of all questions before that.
             }
             },
-            storeAnswer(index, str, fitb) {
+            storeAnswer(index, str) {
                 var entry = {
                     q: index,
-                    a: str,
-                    f: fitb
+                    a: str
                 }
                 var replace = false;
                 //Replaces question if already submitted.
@@ -155,9 +163,40 @@ let deliveryFormat = [];
                     deliveryFormat.push(entry);
                 }
                 
+                //console.log(this.deliveryFormatResults);
+
+                //console.log(this.deliveryFormatAnswers);
+                this.$emit('update:answer', this.deliveryFormatAnswers);
+            },
+            organizeResults(){
+                var index = this.a;
+                if(deliveryFormat[index] != null || index <= deliveryFormat.length-1) {
+                    deliveryFormat[index].fitb = this.fitb
+                } else {
+                    console.log("null found!");
+                    var json = {
+                        q:this.a,
+                        a:"Fill In The Blank Question",
+                        fitb: this.fitb,
+                    }
+                    deliveryFormat.push(json);
+                }
+
+                this.$emit('update:answer', this.deliveryFormatAnswers);
+
+                this.fitb = "";
                 
-                console.log(deliveryFormat);
+
+                if(this.deliveryFormatAnswers.length == this.questions.length && this.deliveryFormatResults.length == 0){
+                    for(var i = 0; i < this.questions.length; i++){
+                        this.deliveryFormatResults.push(this.questions[i].question);
+                        this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]);
+                    }
+                    //console.log(this.deliveryFormatResults);
+                    this.$emit('update:answer', this.deliveryFormatResults);
+                }
             }
+
         }
     }
 </script>

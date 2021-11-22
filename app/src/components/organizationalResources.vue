@@ -39,10 +39,12 @@
                 </div>
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
-                    <button class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
                 </div>
             </div>
 
+            <div> {{organizationalResourcesAnswers}} </div>
 
       </div>
 </template>
@@ -56,12 +58,14 @@ const YESNO = [
     
 ];
     export default {
-        name: 'timeWizard',
+        name: 'organizationalResources',
         data(){
             return{
             a:0,
             b:1,
             fitb:"",
+            organizationalResourcesAnswers:organizationalResources,
+            organizationalResourcesResults:[],
             questions:[
             //
             {
@@ -107,19 +111,22 @@ const YESNO = [
                 this.b += 1
                 //After going on to the next question entry is pushed into results
                 
-                var index = this.a;
-                if(organizationalResources[index] != null) {
+                var index = this.a-1;
+                if(organizationalResources[index] != null || index <= organizationalResources.length-1) {
                     organizationalResources[index].fitb = this.fitb
                 } else {
                     console.log("null found!");
                     var json = {
                         q:this.a,
-                        a:"Additional Detail Question",
+                        a:"Fill in the Blank Question",
                         fitb: this.fitb,
                     }
                     organizationalResources.push(json);
                 }
                 console.log(organizationalResources);
+                
+                this.$emit('update:answer', this.organizationalResourcesAnswers);
+
                 //Done so it doesnt keep the previous answer
                 this.fitb = "";
                 
@@ -133,11 +140,10 @@ const YESNO = [
             this.b -= 1
             }
             },
-            storeAnswer(index, str, fitb) {
+            storeAnswer(index, str) {
                 var entry = {
                     q: index,
                     a: str,
-                    f: fitb
                 }
                 var replace = false;
                 //Replaces question if already submitted.
@@ -153,9 +159,38 @@ const YESNO = [
                     organizationalResources.push(entry);
                 }
                 
+                this.$emit('update:answer', this.organizationalResourcesAnswers);
+                //console.log(organizationalResources);
+            },
+            organizeResults(){
+                var index = this.a;
+                if(organizationalResources[index] != null || index <= organizationalResources.length-1) {
+                    organizationalResources[index].fitb = this.fitb
+                } else {
+                    console.log("null found!");
+                    var json = {
+                        q:this.a,
+                        a:"Fill In The Blank Question",
+                        fitb: this.fitb,
+                    }
+                    organizationalResources.push(json);
+                }
+
+                this.$emit('update:answer', this.organizationalResourcesAnswers);
+
+                this.fitb = "";
                 
-                console.log(organizationalResources);
+
+                if(this.organizationalResourcesAnswers.length == this.questions.length && this.organizationalResourcesResults.length == 0){
+                    for(var i = 0; i < this.questions.length; i++){
+                        this.organizationalResourcesResults.push(this.questions[i].question);
+                        this.organizationalResourcesResults.push(this.organizationalResourcesAnswers[i]);
+                    }
+                    //console.log(this.organizationalResourcesResults);
+                    this.$emit('update:answer', this.organizationalResourcesResults);
+                }
             }
+
         }
     }
 </script>

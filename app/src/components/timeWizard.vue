@@ -38,9 +38,13 @@
                 </div>
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
-                    <button class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
                 </div>
             </div>
+
+            <div> {{timeWizardAnswers}} </div>
+
 
 
       </div>
@@ -61,6 +65,8 @@ let time = [];
             a:0,
             b:1,
             fitb:"",
+            timeWizardAnswers:time,
+            timeWizardResults:[],
             questions:[
             //
             {
@@ -105,8 +111,8 @@ let time = [];
                 this.b += 1
                 //After going on to the next question entry is pushed into results
                 
-                var index = this.a;
-                if(time[index] != null) {
+                var index = this.a-1;
+                if(time[index] != null || index <= time.length-1) {
                     time[index].fitb = this.fitb
                 } else {
                     console.log("null found!");
@@ -117,7 +123,9 @@ let time = [];
                     }
                     time.push(json);
                 }
-                console.log(time);
+                //console.log(time);
+
+                this.$emit('update:answer', this.timeWizardAnswers);
                 //Done so it doesnt keep the previous answer
                 this.fitb = "";
                 
@@ -152,8 +160,36 @@ let time = [];
                     time.push(entry);
                 }
                 
+                this.$emit('update:answer', this.timeWizardAnswers);
+                //console.log(time);
+            },
+            organizeResults(){
+                var index = this.a;
+                if(time[index] != null || index <= time.length-1) {
+                    time[index].fitb = this.fitb
+                } else {
+                    console.log("null found!");
+                    var json = {
+                        q:this.a,
+                        a:"Fill In The Blank Question",
+                        fitb: this.fitb,
+                    }
+                    time.push(json);
+                }
+
+                this.$emit('update:answer', this.timeWizardAnswers);
+
+                this.fitb = "";
                 
-                console.log(time);
+
+                if(this.timeWizardAnswers.length == this.questions.length && this.timeWizardResults.length == 0){
+                    for(var i = 0; i < this.questions.length; i++){
+                        this.timeWizardResults.push(this.questions[i].question);
+                        this.timeWizardResults.push(this.timeWizardAnswers[i]);
+                    }
+                    //console.log(this.timeWizardResults);
+                    this.$emit('update:answer', this.timeWizardResults)
+                }
             }
         }
     }
