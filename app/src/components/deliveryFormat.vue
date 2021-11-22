@@ -113,13 +113,16 @@ let deliveryFormat = [];
                 //After going on to the next question entry is pushed into results
                 
                 var index = this.a-1;
+
                 if(deliveryFormat[index] != null || index <= deliveryFormat.length-1) {
+
                     deliveryFormat[index].fitb = this.fitb
                 } else {
                     console.log("null found!");
                     var json = {
                         q:this.a,
                         a:"Fill In The Blank Question",
+
                         fitb: this.fitb,
                     }
                     deliveryFormat.push(json);
