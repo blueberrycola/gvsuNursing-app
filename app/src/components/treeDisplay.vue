@@ -1,32 +1,39 @@
 <template>
-  <div id = "decision-tree-page" class="bg-gvsuBlue">
+  <div id = "decision-tree-page" class="bg-gvsuBlue h-screen w-screen">
       <Header />  
 
+      <button class="absolute right-5 bottom-2 bg-black text-white" @click="storePDF()">Save PDF</button>
     
-      <button class="bg-gamboge pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'futurePlans', compileData()">Future Plans</button>
-      
-      <futurePlans @update:answer="storeAnswers" v-if="activeSet === 'futurePlans'" />
     
-      <button class="bg-blue-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'deliveryFormat'">Delivery Format</button>
-     
+      <ul class="w-25% absolute justify-left">
+        <li>
+            <button class="bg-gamboge rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'futurePlans'">Future Plans</button>
+        </li>
+        <li>
+            <button class="bg-blue-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'deliveryFormat'">Delivery Format</button>
+        </li>
+        <li>
+            <button class="bg-purple-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'transferCredits'">Transfer Credits</button>
+        </li>
+        <li>
+            <button class="bg-tan rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'time'">Time Considerations</button>
+        </li>
+        <li>
+            <button class="bg-lightSalmon rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'financialConsiderations'">Financial Considerations</button>
+        </li>
+        <li>
+            <button class="bg-yellow-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5 focus:outline-none focus:ring-2 focus:ring-black" @click="activeSet = 'organizationalResources'">Organizational Resources</button>
+        </li>
+      </ul>
+
+    
+      <futurePlans @update:answer="storeAnswers" v-if="activeSet === 'futurePlans'" /> 
       <deliveryFormat @update:answer="storeAnswers" v-if="activeSet === 'deliveryFormat'" />
-  
-      <button class="bg-purple-300 pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'transferCredits'">Transfer Credits</button>
-  
       <transferCredits @update:answer="storeAnswers" v-if="activeSet === 'transferCredits'"/>
-      
-      <button class="bg-tan pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'time'">Time Considerations</button>
-     
       <timeWizard @update:answer="storeAnswers" v-if="activeSet === 'time'"/>
-     
-      <button class="bg-lightSalmon pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'financialConsiderations'">Financial Considerations</button>
-
       <financialConsiderations @update:answer="storeAnswers" v-if="activeSet === 'financialConsiderations'"/>
-   
-      <button class="bg-yellow-300 pt-5 pb-5 pr-5 pl-5 focus:outline-none focus:ring-2 focus:ring-black" @click="activeSet = 'organizationalResources'">Organizational Resources</button>
-
       <organizationalResources @update:answer="storeAnswers" v-if="activeSet === 'organizationalResources'" />
-   
+    
   </div>
   
 </template>
@@ -56,6 +63,7 @@ import transferCredits from "./transferCredits.vue"
 import financialConsiderations from "./financialConsiderations.vue"
 import timeWizard from "./timeWizard.vue"
 import organizationalResources from "./organizationalResources.vue"
+import jsPDF from 'jspdf'
 
 
 export default {
@@ -110,6 +118,12 @@ export default {
                 console.log(transferCreditsResults);
             }
 
+        },
+        storePDF(){
+            let pdfName = "test";
+            var doc = new jsPDF();
+            doc.text("testing", 10, 10);
+            doc.save(pdfName + ".pdf");
         }
 
     },
@@ -128,12 +142,14 @@ function showResults() {
 </script>
 
 <style>
+/*
 .decision-tree-page {
     display: flex;
     width: 100%;
     height: 100%;
     justify-content: center;
 }
+/*
 .tree-container {
     display: flex;
     width: 40%;
@@ -160,13 +176,7 @@ function showResults() {
     background-color: wheat;
     border-radius: 10px 10px 0px 0px;
 }
-.main{
-    display: flex;
-    width: 100%;
-    height: 70%;
-    flex-flow: column;
-    margin: auto;
-}
+
 .tree-footer{
     display: flex;
     width: 100%;
@@ -179,6 +189,7 @@ function showResults() {
 .box-question {
     margin-top: 20px;
 }
+
 .box-suggestions {
     display: flex;
     width: 100%;
@@ -188,6 +199,8 @@ function showResults() {
     background-color: wheat;
     border-radius: 0px 0px 10px 10px;
 }
+
+
 ul{
     display: flex;
     justify-content: center;
@@ -196,6 +209,8 @@ ul{
     padding: 0;
     flex-flow: column;
 }
+
+
 ul li {
     list-style-type: none; 
     line-height: 2;
@@ -207,13 +222,17 @@ ul li {
 }
 
 
-li:hover {
+
+
+
+/*li:hover {
     background-color: skyblue;
 }
 
 li:focus-visible{
     background-color: skyblue;
 }
+*/
 
 .box-button {
     display: flex;
@@ -231,4 +250,31 @@ li:focus-visible{
     margin: auto;
     background: grey;
 }
+
+#answers {
+    list-style-type: none; 
+    line-height: 2;
+    justify-content: center;
+    border: 1px solid blue;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+#answers:hover {
+    background-color: skyblue;
+}
+
+.box-question {
+    margin-top: 20px;
+}
+
+.main{
+    display: flex;
+    width: 100%;
+    height: 70%;
+    flex-flow: column;
+    margin: auto;
+}
+
 </style>

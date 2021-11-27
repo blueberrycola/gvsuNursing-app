@@ -30,7 +30,7 @@
                 </div>
                 <div class="box-suggestion">
                     <ul class ="flex flex-col w-full justify-center pb-10">
-                        <li @click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
+                        <li id="answers" @click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
                             {{item.answer}}
                         </li>
                         
@@ -45,7 +45,7 @@
             </div>
             <div id="tree-footer">
                      
-                     {{deliveryFormatAnswers}}
+                    {{deliveryFormatAnswers}}
 
             </div>
 
@@ -190,7 +190,9 @@ let deliveryFormat = [];
                 if(this.deliveryFormatAnswers.length == this.questions.length && this.deliveryFormatResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
                         this.deliveryFormatResults.push(this.questions[i].question);
-                        this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]);
+                        this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]["a"]);
+                        if(this.deliveryFormatResults[i]["fitb"] != "")
+                            this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]["fitb"]);
                     }
                     //console.log(this.deliveryFormatResults);
                     this.$emit('update:answer', this.deliveryFormatResults);

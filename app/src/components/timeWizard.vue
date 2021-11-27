@@ -29,7 +29,7 @@
                 </div>
                 <div class="box-suggestion">
                     <ul class ="flex flex-col w-full justify-center pb-10">
-                        <li @click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
+                        <li id="answers" @click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
                             {{item.answer}}
                         </li>
                         
