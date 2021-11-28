@@ -1,6 +1,6 @@
 <template>
 
-<div class="flex flex-col w-2/5 relative m-auto text-center bg-purple-300 shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
+<div class="flex flex-col w-2/5 m-auto text-center bg-purple-300 shadow-2xl pl-10 pr-10 pb- pt-5 border-black border-sm rounded-2xl">
             <div class="center border-black">
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
@@ -29,7 +29,7 @@
                 </div>
                 <div class="box-suggestion">
                     <ul class ="flex flex-col w-full justify-center pb-10">
-                        <li @click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
+                        <li id = "answers" @click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
                             {{item.answer}}
                         </li>
                         
