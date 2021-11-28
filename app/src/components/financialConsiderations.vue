@@ -39,7 +39,7 @@
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
                     <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
-                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Save Results</button>
                 </div>
             </div>
 
@@ -173,10 +173,13 @@ let financialConsiderations = [];
 
                 if(this.financialConsiderationsAnswers.length == this.questions.length && this.financialConsiderationsResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.financialConsiderationsResults.push(this.questions[i].question);
-                        this.financialConsiderationsResults.push(this.financialConsiderationsAnswers[i]);
+                        this.financialConsiderationsResults.push(this.financialConsiderationsAnswers[i]["q"].toString() + ". " + this.questions[i].question);
+                        if(this.financialConsiderationsAnswers[i]["a"] != "Additional Detail Question")
+                            this.financialConsiderationsResults.push(this.financialConsiderationsAnswers[i]["a"]);
+                        if(this.financialConsiderationsResults[i]["fitb"] != "")
+                            this.financialConsiderationsResults.push(this.financialConsiderationsAnswers[i]["fitb"]);
                     }
-                    //console.log(this.financialConsiderationsResults);
+                    console.log(this.financialConsiderationsResults);
                     this.$emit('update:answer', this.financialConsiderationsResults)
                 }
             }

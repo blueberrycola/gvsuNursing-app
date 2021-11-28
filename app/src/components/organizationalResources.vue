@@ -40,7 +40,7 @@
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
                     <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
-                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Save Results</button>
                 </div>
             </div>
 
@@ -183,8 +183,11 @@ const YESNO = [
 
                 if(this.organizationalResourcesAnswers.length == this.questions.length && this.organizationalResourcesResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.organizationalResourcesResults.push(this.questions[i].question);
-                        this.organizationalResourcesResults.push(this.organizationalResourcesAnswers[i]);
+                        this.organizationalResourcesResults.push(this.organizationalResourcesAnswers[i]["q"].toString() + ". " + this.questions[i].question);
+                        if(this.organizationalResourcesAnswers[i]["a"] != "Additional Detail Question")
+                            this.organizationalResourcesResults.push(this.organizationalResourcesAnswers[i]["a"]);
+                        if(this.organizationalResourcesResults[i]["fitb"] != "")
+                            this.organizationalResourcesResults.push(this.organizationalResourcesAnswers[i]["fitb"]);
                     }
                     //console.log(this.organizationalResourcesResults);
                     this.$emit('update:answer', this.organizationalResourcesResults);

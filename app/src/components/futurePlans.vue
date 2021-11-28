@@ -40,7 +40,7 @@
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
                     <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
-                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Save Results</button>
                 </div>
             </div>
         <div>
@@ -164,8 +164,11 @@ let futurePlans = [];
 
                 if(this.futurePlansAnswers.length == this.questions.length && this.futurePlansResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.futurePlansResults.push(this.questions[i].question);
-                        this.futurePlansResults.push(this.futurePlansAnswers[i]);
+                        this.futurePlansResults.push(this.futurePlansAnswers[i]["q"].toString() + ". " + this.questions[i].question);
+                        if(this.futurePlansAnswers[i]["a"] != "Additional Detail Question")
+                            this.futurePlansResults.push(this.futurePlansAnswers[i]["a"]);
+                        if(this.futurePlansResults[i]["fitb"] != "")
+                            this.futurePlansResults.push(this.futurePlansAnswers[i]["fitb"]);
                     }
                     //console.log(this.futurePlansResults);
                     this.$emit('update:answer', this.futurePlansResults);
