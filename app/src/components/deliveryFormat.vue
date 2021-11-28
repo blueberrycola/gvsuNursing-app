@@ -40,7 +40,7 @@
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
                     <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
-                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Save Results</button>
                 </div>
             </div>
             <div id="tree-footer">
@@ -48,7 +48,6 @@
                     {{deliveryFormatAnswers}}
 
             </div>
-
 
       </div>
 </template>
@@ -185,11 +184,10 @@ let deliveryFormat = [];
                 this.$emit('update:answer', this.deliveryFormatAnswers);
 
                 this.fitb = "";
-                
 
                 if(this.deliveryFormatAnswers.length == this.questions.length && this.deliveryFormatResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.deliveryFormatResults.push(this.questions[i].question);
+                        this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]["q"].toString() + ". " + this.questions[i].question);
                         this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]["a"]);
                         if(this.deliveryFormatResults[i]["fitb"] != "")
                             this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]["fitb"]);

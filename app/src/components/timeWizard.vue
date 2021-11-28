@@ -184,8 +184,11 @@ let time = [];
 
                 if(this.timeWizardAnswers.length == this.questions.length && this.timeWizardResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.timeWizardResults.push(this.questions[i].question);
-                        this.timeWizardResults.push(this.timeWizardAnswers[i]);
+                        this.timeWizardResults.push(this.timeWizardAnswers[i]["q"].toString() + ". " + this.questions[i].question);
+                        if(this.timeWizardAnswers[i]["a"] != "Additional Detail Question")
+                            this.timeWizardResults.push(this.timeWizardAnswers[i]["a"]);
+                        if(this.timeWizardResults[i]["fitb"] != "")
+                            this.timeWizardResults.push(this.timeWizardAnswers[i]["fitb"]);
                     }
                     //console.log(this.timeWizardResults);
                     this.$emit('update:answer', this.timeWizardResults)

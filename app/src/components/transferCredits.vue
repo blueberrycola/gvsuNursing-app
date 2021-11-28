@@ -39,12 +39,13 @@
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
                     <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
-                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Save Results</button>
                 </div>
+                <div>{{transferCreditsAnswers}}</div>
             </div>
 
 
-        <div>{{transferCreditsAnswers}}</div>
+        
 
       </div>
 </template>
@@ -162,8 +163,11 @@ let transferCredits = [];
 
                 if(this.transferCreditsAnswers.length == this.questions.length && this.transferCreditsResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.transferCreditsResults.push(this.questions[i].question);
-                        this.transferCreditsResults.push(this.transferCreditsAnswers[i]);
+                        this.transferCreditsResults.push(this.transferCreditsAnswers[i]["q"].toString() + ". " + this.questions[i].question);
+                        if(this.transferCreditsAnswers[i]["a"] != "Additional Detail Question")
+                            this.transferCreditsResults.push(this.transferCreditsAnswers[i]["a"]);
+                        if(this.transferCreditsResults[i]["fitb"] != "")
+                            this.transferCreditsResults.push(this.transferCreditsAnswers[i]["fitb"]);
                     }
                     console.log(this.transferCreditsResults);
                     this.$emit('update:answer', this.transferCreditsResults);
