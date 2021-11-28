@@ -7,22 +7,22 @@
     
       <ul class="w-25% absolute justify-left">
         <li>
-            <button class="bg-gamboge rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'futurePlans'">Future Plans</button>
+            <button class="bg-gamboge rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'futurePlans'"><img src="../assets/icons/icons8-plan-64.png"></button>
         </li>
         <li>
-            <button class="bg-blue-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'deliveryFormat'">Delivery Format</button>
+            <button class="bg-blue-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'deliveryFormat'"><img src="../assets/icons/icons8-online-learning-60.png"></button>
         </li>
         <li>
-            <button class="bg-purple-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'transferCredits'">Transfer Credits</button>
+            <button class="bg-purple-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'transferCredits'"><img src="../assets/icons/icons8-scroll-64.png"></button>
         </li>
         <li>
-            <button class="bg-tan rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'time'">Time Considerations</button>
+            <button class="bg-tan rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'time'"><img src="../assets/icons/icons8-hourglass-64.png"></button>
         </li>
         <li>
-            <button class="bg-lightSalmon rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'financialConsiderations'">Financial Considerations</button>
+            <button class="bg-lightSalmon rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'financialConsiderations'"><img src="../assets/icons/icons8-money-64.png"></button>
         </li>
         <li>
-            <button class="bg-yellow-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5 focus:outline-none focus:ring-2 focus:ring-black" @click="activeSet = 'organizationalResources'">Organizational Resources</button>
+            <button class="bg-yellow-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5 focus:outline-none focus:ring-2 focus:ring-black" @click="activeSet = 'organizationalResources'"><img src="../assets/icons/icons8-books-64.png"></button>
         </li>
       </ul>
 
@@ -96,7 +96,6 @@ export default {
             if(this.activeSet == "deliveryFormat"){
                 deliveryFormatResults = answers;
                 console.log(deliveryFormatResults);
-                console.log(financialConsiderationsResults);
             }
             if(this.activeSet == "financialConsiderations"){
                 financialConsiderationsResults = answers;
@@ -123,61 +122,7 @@ export default {
         storePDF(){
             let pdfName = "test";
             var doc = new jsPDF();
-
-            if(futurePlansResults.length > 0){
-                var splitDoc = doc.splitTextToSize(futurePlansResults, 190);
-                doc.setFontSize(20).setFont('times', 'bold');
-                doc.text("Future Plans", 10, 10);
-                doc.setFontSize(15).setFont('times', 'normal');
-                doc.text(splitDoc, 10, 20);
-            }
-
-            if(deliveryFormatResults.length > 0){
-                doc.addPage();
-                var splitDocOne = doc.splitTextToSize(deliveryFormatResults, 190);
-                doc.setFontSize(20).setFont('times', 'bold');
-                doc.text("Delivery Format", 10, 10);
-                doc.setFontSize(15).setFont('times', 'normal');
-                doc.text(splitDocOne, 10, 20);
-            }
-
-            if(transferCreditsResults.length > 0){
-                doc.addPage();
-                var splitDocTwo = doc.splitTextToSize(transferCreditsResults, 190);
-                doc.setFontSize(20).setFont('times', 'bold');
-                doc.text("Transfer Credits", 10, 10);
-                doc.setFontSize(15).setFont('times', 'normal');
-                doc.text(splitDocTwo, 10, 20);
-            }
-
-            if(timeWizardResults.length > 0){
-                doc.addPage();
-                var splitDocThree = doc.splitTextToSize(timeWizardResults, 190);
-                doc.setFontSize(20).setFont('times', 'bold');
-                doc.text("Time Considerations", 10, 10);
-                doc.setFontSize(15).setFont('times', 'normal');
-                doc.text(splitDocThree, 10, 20);
-            }
-
-            if(financialConsiderationsResults.length > 0){
-                doc.addPage();
-                var splitDocFour = doc.splitTextToSize(financialConsiderationsResults, 190);
-                doc.setFontSize(20).setFont('times', 'bold');
-                doc.text("Financial Considerations", 10, 10);
-                doc.setFontSize(15).setFont('times', 'normal');
-                doc.text(splitDocFour, 10, 20);
-            }
-
-            if(organizationalResourcesResults.length > 0){
-                doc.addPage();
-                var splitDocFive = doc.splitTextToSize(organizationalResourcesResults, 190);
-                doc.setFontSize(20).setFont('times', 'bold');
-                doc.text("Organizational Resources", 10, 10);
-                doc.setFontSize(15).setFont('times', 'normal');
-                doc.text(splitDocFive, 10, 20);
-            }
-            
-
+            doc.text("testing", 10, 10);
             doc.save(pdfName + ".pdf");
         }
 
