@@ -1,7 +1,8 @@
 <template>
 
-<div class="flex flex-col w-2/5 m-auto text-center bg-purple-300 shadow-2xl pl-10 pr-10 pb- pt-5 border-black border-sm rounded-2xl">
+<div class="flex flex-col w-2/5 relative m-auto text-center bg-purple-300 shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
             <div class="center border-black">
+                <h2 class = "font-bold text-xl pb-6">Transfer Credits:</h2>
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
@@ -29,7 +30,7 @@
                 </div>
                 <div class="box-suggestion">
                     <ul class ="flex flex-col w-full justify-center pb-10">
-                        <li id = "answers" @click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
+                        <li @click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
                             {{item.answer}}
                         </li>
                         
@@ -39,13 +40,12 @@
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
                     <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
-                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Save Results</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
                 </div>
-                <div>{{transferCreditsAnswers}}</div>
             </div>
 
 
-        
+        <div>{{transferCreditsAnswers}}</div>
 
       </div>
 </template>
@@ -81,7 +81,6 @@ let transferCredits = [];
                 
                 }
             ]
-
             }
         },
         methods: {
@@ -155,19 +154,13 @@ let transferCredits = [];
                     }
                     transferCredits.push(json);
                 }
-
                 this.$emit('update:answer', this.transferCreditsAnswers);
-
                 this.fitb = "";
                 
-
                 if(this.transferCreditsAnswers.length == this.questions.length && this.transferCreditsResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.transferCreditsResults.push(this.transferCreditsAnswers[i]["q"].toString() + ". " + this.questions[i].question);
-                        if(this.transferCreditsAnswers[i]["a"] != "Additional Detail Question")
-                            this.transferCreditsResults.push(this.transferCreditsAnswers[i]["a"]);
-                        if(this.transferCreditsResults[i]["fitb"] != "")
-                            this.transferCreditsResults.push(this.transferCreditsAnswers[i]["fitb"]);
+                        this.transferCreditsResults.push(this.questions[i].question);
+                        this.transferCreditsResults.push(this.transferCreditsAnswers[i]);
                     }
                     console.log(this.transferCreditsResults);
                     this.$emit('update:answer', this.transferCreditsResults);

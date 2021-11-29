@@ -1,7 +1,8 @@
 <template>
 
-<div class="flex flex-col w-2/5 relative m-auto text-center bg-gamboge shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
+<div class="flex flex-col w-2/5 relative m-auto text-center bg-blue-400 shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
             <div class="center border-black">
+                <h2 class = "font-bold text-xl pb-6">Future Plans:</h2>
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
@@ -40,7 +41,7 @@
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
                     <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
-                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Save Results</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
                 </div>
             </div>
         <div>
@@ -164,11 +165,8 @@ let futurePlans = [];
 
                 if(this.futurePlansAnswers.length == this.questions.length && this.futurePlansResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.futurePlansResults.push(this.futurePlansAnswers[i]["q"].toString() + ". " + this.questions[i].question);
-                        if(this.futurePlansAnswers[i]["a"] != "Additional Detail Question")
-                            this.futurePlansResults.push(this.futurePlansAnswers[i]["a"]);
-                        if(this.futurePlansResults[i]["fitb"] != "")
-                            this.futurePlansResults.push(this.futurePlansAnswers[i]["fitb"]);
+                        this.futurePlansResults.push(this.questions[i].question);
+                        this.futurePlansResults.push(this.futurePlansAnswers[i]);
                     }
                     //console.log(this.futurePlansResults);
                     this.$emit('update:answer', this.futurePlansResults);

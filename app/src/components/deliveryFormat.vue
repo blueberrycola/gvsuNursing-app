@@ -1,11 +1,12 @@
 <template>
 
-<div class="flex flex-col w-2/5 relative m-auto text-center bg-blue-300 shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
+<div class="flex flex-col w-2/5 relative m-auto text-center bg-yellow-100 shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
             <div class="center border-black">
+                <h2 class = "font-bold text-xl pb-8">Delivery Format:</h2>
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
-                    <h2 class = "font-bold text-xl pb-8">Question {{a + 1}}/{{questions.length}}
+                    <h2 class = "font-bold text-xl pb-6">Question {{a + 1}}/{{questions.length}}
                         <div class="relative pt-1">
                             <div class="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
                                 <div
@@ -40,7 +41,7 @@
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
                     <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
-                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Save Results</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
                 </div>
             </div>
             <div id="tree-footer">
@@ -48,6 +49,7 @@
                     {{deliveryFormatAnswers}}
 
             </div>
+
 
       </div>
 </template>
@@ -184,10 +186,11 @@ let deliveryFormat = [];
                 this.$emit('update:answer', this.deliveryFormatAnswers);
 
                 this.fitb = "";
+                
 
                 if(this.deliveryFormatAnswers.length == this.questions.length && this.deliveryFormatResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]["q"].toString() + ". " + this.questions[i].question);
+                        this.deliveryFormatResults.push(this.questions[i].question);
                         this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]["a"]);
                         if(this.deliveryFormatResults[i]["fitb"] != "")
                             this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]["fitb"]);

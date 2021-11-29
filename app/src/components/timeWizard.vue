@@ -1,7 +1,8 @@
 <template>
 
-<div class="flex flex-col w-2/5 relative m-auto text-center bg-tan shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
+<div class="flex flex-col w-2/5 relative m-auto text-center bg-red-200 shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
             <div class="center border-black">
+                <h2 class = "font-bold text-xl pb-6">Time:</h2>
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
@@ -184,11 +185,8 @@ let time = [];
 
                 if(this.timeWizardAnswers.length == this.questions.length && this.timeWizardResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.timeWizardResults.push(this.timeWizardAnswers[i]["q"].toString() + ". " + this.questions[i].question);
-                        if(this.timeWizardAnswers[i]["a"] != "Additional Detail Question")
-                            this.timeWizardResults.push(this.timeWizardAnswers[i]["a"]);
-                        if(this.timeWizardResults[i]["fitb"] != "")
-                            this.timeWizardResults.push(this.timeWizardAnswers[i]["fitb"]);
+                        this.timeWizardResults.push(this.questions[i].question);
+                        this.timeWizardResults.push(this.timeWizardAnswers[i]);
                     }
                     //console.log(this.timeWizardResults);
                     this.$emit('update:answer', this.timeWizardResults)
