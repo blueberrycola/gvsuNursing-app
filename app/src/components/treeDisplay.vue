@@ -16,13 +16,13 @@
             <button class="bg-purple-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'transferCredits'"><img src="../assets/icons/icons8-scroll-64.png"></button>
         </li>
         <li>
-            <button class="bg-red-200 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'time'"><img src="../assets/icons/icons8-hourglass-64.png"></button>
+            <button class="bg-red-200 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'timeWizard'"><img src="../assets/icons/icons8-hourglass-64.png"></button>
         </li>
         <li>
             <button class="bg-green-500 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'financialConsiderations'"><img src="../assets/icons/icons8-money-64.png"></button>
         </li>
         <li>
-            <button class="bg-yellow-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5 focus:outline-none focus:ring-2 focus:ring-black" @click="activeSet = 'organizationalResources'"><img src="../assets/icons/icons8-books-64.png"></button>
+            <button class="bg-yellow-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'organizationalResources'"><img src="../assets/icons/icons8-books-64.png"></button>
         </li>
       </ul>
 
@@ -30,7 +30,7 @@
       <futurePlans @update:answer="storeAnswers" v-if="activeSet === 'futurePlans'" /> 
       <deliveryFormat @update:answer="storeAnswers" v-if="activeSet === 'deliveryFormat'" />
       <transferCredits @update:answer="storeAnswers" v-if="activeSet === 'transferCredits'"/>
-      <timeWizard @update:answer="storeAnswers" v-if="activeSet === 'time'"/>
+      <timeWizard @update:answer="storeAnswers" v-if="activeSet === 'timeWizard'"/>
       <financialConsiderations @update:answer="storeAnswers" v-if="activeSet === 'financialConsiderations'"/>
       <organizationalResources @update:answer="storeAnswers" v-if="activeSet === 'organizationalResources'" />
     
