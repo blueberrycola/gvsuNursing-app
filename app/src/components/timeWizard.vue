@@ -1,7 +1,8 @@
 <template>
 
-<div class="flex flex-col w-2/5 relative m-auto text-center bg-tan shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
+<div class="flex flex-col w-2/5 relative m-auto text-center bg-red-200 shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
             <div class="center border-black">
+                <h2 class = "font-bold text-xl pb-6">Time:</h2>
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
@@ -118,13 +119,12 @@ let time = [];
                     console.log("null found!");
                     var json = {
                         q:this.a,
-                        a:"Additional Detail Question",
+                        a:"Fill In The Blank Question",
                         fitb: this.fitb,
                     }
                     time.push(json);
                 }
                 //console.log(time);
-
                 this.$emit('update:answer', this.timeWizardAnswers);
                 //Done so it doesnt keep the previous answer
                 this.fitb = "";
@@ -176,22 +176,20 @@ let time = [];
                     }
                     time.push(json);
                 }
-
                 this.$emit('update:answer', this.timeWizardAnswers);
-
                 this.fitb = "";
                 
-
+                console.log(this.timeWizardAnswers)
                 if(this.timeWizardAnswers.length == this.questions.length && this.timeWizardResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.timeWizardResults.push(this.timeWizardAnswers[i]["q"].toString() + ". " + this.questions[i].question);
-                        if(this.timeWizardAnswers[i]["a"] != "Additional Detail Question")
-                            this.timeWizardResults.push(this.timeWizardAnswers[i]["a"]);
+                        this.timeWizardResults.push((i+1).toString() + ". " + this.questions[i].question);
+                        if(this.timeWizardAnswers[i]["a"] != "Fill In The Blank Question")
+                            this.timeWizardResults.push("\n\t" + this.timeWizardAnswers[i]["a"]);
                         if(this.timeWizardResults[i]["fitb"] != "")
-                            this.timeWizardResults.push(this.timeWizardAnswers[i]["fitb"]);
+                            this.timeWizardResults.push("\n\t" + this.timeWizardAnswers[i]["fitb"]);
                     }
                     //console.log(this.timeWizardResults);
-                    this.$emit('update:answer', this.timeWizardResults)
+                    this.$emit('update:answer', this.timeWizardResults);
                 }
             }
         }
