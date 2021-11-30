@@ -45,7 +45,7 @@
             </div>
 
 
-        <div>{{transferCreditsAnswers}}</div>
+        <div>{{organizationalResourcesAnswers}}</div>
 
       </div>
 </template>
