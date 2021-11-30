@@ -16,7 +16,7 @@
             <button class="bg-purple-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'transferCredits'">Transfer Credits</button>
         </li>
         <li>
-            <button class="bg-tan rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'time'">Time Considerations</button>
+            <button class="bg-tan rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'timeWizard'">Time Considerations</button>
         </li>
         <li>
             <button class="bg-lightSalmon rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'financialConsiderations'">Financial Considerations</button>
@@ -30,7 +30,7 @@
       <futurePlans @update:answer="storeAnswers" v-if="activeSet === 'futurePlans'" /> 
       <deliveryFormat @update:answer="storeAnswers" v-if="activeSet === 'deliveryFormat'" />
       <transferCredits @update:answer="storeAnswers" v-if="activeSet === 'transferCredits'"/>
-      <timeWizard @update:answer="storeAnswers" v-if="activeSet === 'time'"/>
+      <timeWizard @update:answer="storeAnswers" v-if="activeSet === 'timeWizard'"/>
       <financialConsiderations @update:answer="storeAnswers" v-if="activeSet === 'financialConsiderations'"/>
       <organizationalResources @update:answer="storeAnswers" v-if="activeSet === 'organizationalResources'" />
     
@@ -122,7 +122,7 @@ export default {
         },
         storePDF(){
             let pdfName = "test";
-            var doc = new jsPDF();
+            var doc = new jsPDF({orientation: "p", lineHeight: 1.5});
 
             if(futurePlansResults.length > 0){
                 var splitDoc = doc.splitTextToSize(futurePlansResults, 190);
@@ -155,6 +155,8 @@ export default {
                 var splitDocThree = doc.splitTextToSize(timeWizardResults, 190);
                 doc.setFontSize(20).setFont('times', 'bold');
                 doc.text("Time Considerations", 10, 10);
+
+
                 doc.setFontSize(15).setFont('times', 'normal');
                 doc.text(splitDocThree, 10, 20);
             }

@@ -187,10 +187,10 @@ let deliveryFormat = [];
 
                 if(this.deliveryFormatAnswers.length == this.questions.length && this.deliveryFormatResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]["q"].toString() + ". " + this.questions[i].question);
-                        this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]["a"]);
+                        this.deliveryFormatResults.push((i+1).toString() + ". " + this.questions[i].question + "\n");
+                        this.deliveryFormatResults.push("\t"+this.deliveryFormatAnswers[i]["a"]);
                         if(this.deliveryFormatResults[i]["fitb"] != "")
-                            this.deliveryFormatResults.push(this.deliveryFormatAnswers[i]["fitb"]);
+                            this.deliveryFormatResults.push("\t"+this.deliveryFormatAnswers[i]["fitb"]);
                     }
                     //console.log(this.deliveryFormatResults);
                     this.$emit('update:answer', this.deliveryFormatResults);

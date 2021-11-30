@@ -41,10 +41,10 @@
                     <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
                     <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Save Results</button>
                 </div>
-                <div>{{transferCreditsAnswers}}</div>
+               
             </div>
 
-
+         <div>{{transferCreditsAnswers}}</div>
         
 
       </div>
@@ -98,7 +98,7 @@ let transferCredits = [];
                     console.log("null found!");
                     var json = {
                         q:this.a,
-                        a:"Additional Detail Question",
+                        a:"Fill In The Blank Question",
                         fitb: this.fitb,
                     }
                     transferCredits.push(json);
@@ -156,6 +156,7 @@ let transferCredits = [];
                     transferCredits.push(json);
                 }
 
+            
                 this.$emit('update:answer', this.transferCreditsAnswers);
 
                 this.fitb = "";
@@ -163,11 +164,11 @@ let transferCredits = [];
 
                 if(this.transferCreditsAnswers.length == this.questions.length && this.transferCreditsResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.transferCreditsResults.push(this.transferCreditsAnswers[i]["q"].toString() + ". " + this.questions[i].question);
-                        if(this.transferCreditsAnswers[i]["a"] != "Additional Detail Question")
-                            this.transferCreditsResults.push(this.transferCreditsAnswers[i]["a"]);
+                        this.transferCreditsResults.push((i+1).toString() + ". " + this.questions[i].question);
+                        if(this.transferCreditsAnswers[i]["a"] != "Fill In The Blank Question")
+                            this.transferCreditsResults.push("\t"+this.transferCreditsAnswers[i]["a"]);
                         if(this.transferCreditsResults[i]["fitb"] != "")
-                            this.transferCreditsResults.push(this.transferCreditsAnswers[i]["fitb"]);
+                            this.transferCreditsResults.push("\t"+this.transferCreditsAnswers[i]["fitb"]);
                     }
                     console.log(this.transferCreditsResults);
                     this.$emit('update:answer', this.transferCreditsResults);

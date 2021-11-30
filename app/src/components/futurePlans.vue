@@ -98,7 +98,7 @@ let futurePlans = [];
                     console.log("null found!");
                     var json = {
                         q:this.a,
-                        a:"Additional Detail Question",
+                        a:"Fill In The blank Question",
                         fitb: this.fitb,
                     }
                     futurePlans.push(json);
@@ -164,11 +164,11 @@ let futurePlans = [];
 
                 if(this.futurePlansAnswers.length == this.questions.length && this.futurePlansResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.futurePlansResults.push(this.futurePlansAnswers[i]["q"].toString() + ". " + this.questions[i].question);
-                        if(this.futurePlansAnswers[i]["a"] != "Additional Detail Question")
-                            this.futurePlansResults.push(this.futurePlansAnswers[i]["a"]);
+                        this.futurePlansResults.push((i+1).toString() + ". " + this.questions[i].question);
+                        if(this.futurePlansAnswers[i]["a"] != "Fill In The Blank Question")
+                            this.futurePlansResults.push("\t" + this.futurePlansAnswers[i]["a"]);
                         if(this.futurePlansResults[i]["fitb"] != "")
-                            this.futurePlansResults.push(this.futurePlansAnswers[i]["fitb"]);
+                            this.futurePlansResults.push("\t"+this.futurePlansAnswers[i]["fitb"]);
                     }
                     //console.log(this.futurePlansResults);
                     this.$emit('update:answer', this.futurePlansResults);

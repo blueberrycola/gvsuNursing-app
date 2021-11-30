@@ -108,7 +108,7 @@ let financialConsiderations = [];
                     console.log("null found!");
                     var json = {
                         q:this.a,
-                        a:"Additional Detail Question",
+                        a:"Fill In The Blank Question",
                         fitb: this.fitb,
                     }
                     financialConsiderations.push(json);
@@ -173,11 +173,11 @@ let financialConsiderations = [];
 
                 if(this.financialConsiderationsAnswers.length == this.questions.length && this.financialConsiderationsResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.financialConsiderationsResults.push(this.financialConsiderationsAnswers[i]["q"].toString() + ". " + this.questions[i].question);
-                        if(this.financialConsiderationsAnswers[i]["a"] != "Additional Detail Question")
-                            this.financialConsiderationsResults.push(this.financialConsiderationsAnswers[i]["a"]);
+                        this.financialConsiderationsResults.push((i+1).toString() + ". " + this.questions[i].question);
+                        if(this.financialConsiderationsAnswers[i]["a"] != "Fill In The Blank Question")
+                            this.financialConsiderationsResults.push("\t"+this.financialConsiderationsAnswers[i]["a"]);
                         if(this.financialConsiderationsResults[i]["fitb"] != "")
-                            this.financialConsiderationsResults.push(this.financialConsiderationsAnswers[i]["fitb"]);
+                            this.financialConsiderationsResults.push("\t"+this.financialConsiderationsAnswers[i]["fitb"]);
                     }
                     console.log(this.financialConsiderationsResults);
                     this.$emit('update:answer', this.financialConsiderationsResults)

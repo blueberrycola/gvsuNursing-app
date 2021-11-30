@@ -39,7 +39,7 @@
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
                     <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
-                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Save Results</button>
                 </div>
             </div>
 
@@ -118,7 +118,7 @@ let time = [];
                     console.log("null found!");
                     var json = {
                         q:this.a,
-                        a:"Additional Detail Question",
+                        a:"Fill In The Blank Question",
                         fitb: this.fitb,
                     }
                     time.push(json);
@@ -181,17 +181,18 @@ let time = [];
 
                 this.fitb = "";
                 
+                console.log(this.timeWizardAnswers)
 
                 if(this.timeWizardAnswers.length == this.questions.length && this.timeWizardResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.timeWizardResults.push(this.timeWizardAnswers[i]["q"].toString() + ". " + this.questions[i].question);
-                        if(this.timeWizardAnswers[i]["a"] != "Additional Detail Question")
-                            this.timeWizardResults.push(this.timeWizardAnswers[i]["a"]);
+                        this.timeWizardResults.push((i+1).toString() + ". " + this.questions[i].question);
+                        if(this.timeWizardAnswers[i]["a"] != "Fill In The Blank Question")
+                            this.timeWizardResults.push("\n\t" + this.timeWizardAnswers[i]["a"]);
                         if(this.timeWizardResults[i]["fitb"] != "")
-                            this.timeWizardResults.push(this.timeWizardAnswers[i]["fitb"]);
+                            this.timeWizardResults.push("\n\t" + this.timeWizardAnswers[i]["fitb"]);
                     }
                     //console.log(this.timeWizardResults);
-                    this.$emit('update:answer', this.timeWizardResults)
+                    this.$emit('update:answer', this.timeWizardResults);
                 }
             }
         }

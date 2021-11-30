@@ -118,7 +118,7 @@ const YESNO = [
                     console.log("null found!");
                     var json = {
                         q:this.a,
-                        a:"Fill in the Blank Question",
+                        a:"Fill In The Blank Question",
                         fitb: this.fitb,
                     }
                     organizationalResources.push(json);
@@ -183,11 +183,11 @@ const YESNO = [
 
                 if(this.organizationalResourcesAnswers.length == this.questions.length && this.organizationalResourcesResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.organizationalResourcesResults.push(this.organizationalResourcesAnswers[i]["q"].toString() + ". " + this.questions[i].question);
-                        if(this.organizationalResourcesAnswers[i]["a"] != "Additional Detail Question")
-                            this.organizationalResourcesResults.push(this.organizationalResourcesAnswers[i]["a"]);
+                        this.organizationalResourcesResults.push((i+1).toString() + ". " + this.questions[i].question);
+                        if(this.organizationalResourcesAnswers[i]["a"] != "Fill In The Blank Question")
+                            this.organizationalResourcesResults.push("\t"+this.organizationalResourcesAnswers[i]["a"]);
                         if(this.organizationalResourcesResults[i]["fitb"] != "")
-                            this.organizationalResourcesResults.push(this.organizationalResourcesAnswers[i]["fitb"]);
+                            this.organizationalResourcesResults.push("\t"+this.organizationalResourcesAnswers[i]["fitb"]);
                     }
                     //console.log(this.organizationalResourcesResults);
                     this.$emit('update:answer', this.organizationalResourcesResults);
