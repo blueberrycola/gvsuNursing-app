@@ -1,7 +1,8 @@
 <template>
 
-<div class="flex flex-col w-2/5 relative m-auto text-center bg-salmon shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
+<div class="flex flex-col w-2/5 relative m-auto text-center bg-green-500 shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
             <div class="center border-black">
+                <h2 class = "font-bold text-xl pb-6">Financial Considerations:</h2>
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
@@ -39,7 +40,7 @@
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
                     <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
-                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Save Results</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
                 </div>
             </div>
 
@@ -165,19 +166,16 @@ let financialConsiderations = [];
                     }
                     financialConsiderations.push(json);
                 }
-
                 this.$emit('update:answer', this.financialConsiderationsAnswers);
-
                 this.fitb = "";
                 
-
                 if(this.financialConsiderationsAnswers.length == this.questions.length && this.financialConsiderationsResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.financialConsiderationsResults.push(this.financialConsiderationsAnswers[i]["q"].toString() + ". " + this.questions[i].question);
-                        if(this.financialConsiderationsAnswers[i]["a"] != "Additional Detail Question")
-                            this.financialConsiderationsResults.push(this.financialConsiderationsAnswers[i]["a"]);
+                        this.financialConsiderationsResults.push((i+1).toString() + ". " + this.questions[i].question);
+                        if(this.financialConsiderationsAnswers[i]["a"] != "Fill In The Blank Question")
+                            this.financialConsiderationsResults.push("\t"+this.financialConsiderationsAnswers[i]["a"]);
                         if(this.financialConsiderationsResults[i]["fitb"] != "")
-                            this.financialConsiderationsResults.push(this.financialConsiderationsAnswers[i]["fitb"]);
+                            this.financialConsiderationsResults.push("\t"+this.financialConsiderationsAnswers[i]["fitb"]);
                     }
                     console.log(this.financialConsiderationsResults);
                     this.$emit('update:answer', this.financialConsiderationsResults)

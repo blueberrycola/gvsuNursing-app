@@ -1,55 +1,57 @@
 <template>
 
-<div class="flex flex-col w-2/5 relative m-auto text-center bg-yellow-300 shadow-2xl pl-10 pr-10 pb-5 pt-5 border-black border-sm rounded-2xl">
+<div class="flex flex-col w-2/5 m-auto text-center bg-yellow-300 shadow-2xl pl-10 pr-10 pb- pt-5 border-black border-sm rounded-2xl">
             <div class="center border-black">
+                <h2 class = "font-bold text-xl pb-6">Organizational Resources:</h2>
             </div>
             <div class="main" v-for="(element, index) in questions.slice(a,b)" :key="index">
                 <div class="box-question">
                     <h2 class = "font-bold text-xl pb-8">Question {{a + 1}}/{{questions.length}}
                         <div class="relative pt-1">
-                            <div class="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
-                                <div
-                                    v-bind:style="{
-                                        width: b/questions.length*100 + '%' 
-                                     }"
-                                        class="
-                                            shadow-none
-                                            flex flex-col
-                                            text-center
-                                            whitespace-nowrap
-                                          text-white
-                                            justify-center
-                                          bg-black
-                                            pb-8
-                                        "
-                                    ></div>
-                            </div>
-                        </div>
+  <div class="overflow-hidden h-2 text-xs flex rounded bg-purple-200">
+    <div
+      v-bind:style="{
+          width: b/questions.length*100 + '%' 
+          }"
+      class="
+        shadow-none
+        flex flex-col
+        text-center
+        whitespace-nowrap
+        text-white
+        justify-center
+        bg-purple-500
+      "
+    ></div>
+  </div>
+</div>
                     </h2>
                     <p class = "pb-10">{{element.question}}</p>
                 </div>
                 <div class="box-suggestion">
                     <ul class ="flex flex-col w-full justify-center pb-10">
-                        <li id="answers" @click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
+                        <li id = "answers" @click="storeAnswer(b,item.answer)" v-for="(item,index) in element.answers" :key="index">
                             {{item.answer}}
                         </li>
                         
-                        <textarea v-model="fitb" class="shadow-2xl bg-yellow-200 rounded-xl" rows="4" cols="50" placeholder="Additional details:" ref="fitb"></textarea>
+                        <textarea v-model="fitb" class="shadow-2xl bg-purple-200 rounded-xl" rows="4" cols="50" placeholder="Additional details:" ref="fitb"></textarea>
                     </ul>
                 </div>
                 <div class="box-button pb-10">
                     <button class="hover:bg-blue-200" @click="subtract()">Previous</button>
                     <button v-if="b < questions.length" class="hover:bg-blue-200" @click="add()">Next</button>
-                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Save Results</button>
+                    <button v-if="b === questions.length" class="hover:bg-blue-200" @click="organizeResults()">Check Results</button>
                 </div>
             </div>
 
-            <div> {{organizationalResourcesAnswers}} </div>
+
+        <div>{{transferCreditsAnswers}}</div>
 
       </div>
 </template>
 
 <script>
+
 let organizationalResources = [];
 const YESNO = [
     
@@ -118,7 +120,7 @@ const YESNO = [
                     console.log("null found!");
                     var json = {
                         q:this.a,
-                        a:"Fill in the Blank Question",
+                        a:"Fill In The Blank Question",
                         fitb: this.fitb,
                     }
                     organizationalResources.push(json);
@@ -126,7 +128,6 @@ const YESNO = [
                 console.log(organizationalResources);
                 
                 this.$emit('update:answer', this.organizationalResourcesAnswers);
-
                 //Done so it doesnt keep the previous answer
                 this.fitb = "";
                 
@@ -175,25 +176,21 @@ const YESNO = [
                     }
                     organizationalResources.push(json);
                 }
-
                 this.$emit('update:answer', this.organizationalResourcesAnswers);
-
                 this.fitb = "";
                 
-
                 if(this.organizationalResourcesAnswers.length == this.questions.length && this.organizationalResourcesResults.length == 0){
                     for(var i = 0; i < this.questions.length; i++){
-                        this.organizationalResourcesResults.push(this.organizationalResourcesAnswers[i]["q"].toString() + ". " + this.questions[i].question);
-                        if(this.organizationalResourcesAnswers[i]["a"] != "Additional Detail Question")
-                            this.organizationalResourcesResults.push(this.organizationalResourcesAnswers[i]["a"]);
+                        this.organizationalResourcesResults.push((i+1).toString() + ". " + this.questions[i].question);
+                        if(this.organizationalResourcesAnswers[i]["a"] != "Fill In The Blank Question")
+                            this.organizationalResourcesResults.push("\t"+this.organizationalResourcesAnswers[i]["a"]);
                         if(this.organizationalResourcesResults[i]["fitb"] != "")
-                            this.organizationalResourcesResults.push(this.organizationalResourcesAnswers[i]["fitb"]);
+                            this.organizationalResourcesResults.push("\t"+this.organizationalResourcesAnswers[i]["fitb"]);
                     }
                     //console.log(this.organizationalResourcesResults);
                     this.$emit('update:answer', this.organizationalResourcesResults);
                 }
             }
-
         }
     }
 </script>
