@@ -22,9 +22,25 @@
             <button class="bg-green-500 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'financialConsiderations'"><img src="../assets/icons/icons8-money-64.png"></button>
         </li>
         <li>
-            <button class="bg-yellow-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5" @click="activeSet = 'organizationalResources'"><img src="../assets/icons/icons8-books-64.png"></button>
+            <button class="bg-yellow-300 rounded-lg px-4 py-2 font-bold pt-5 pb-5 pr-5 pl-5 focus:outline-none focus:ring-2 focus:ring-black" @click="activeSet = 'organizationalResources'"><img src="../assets/icons/icons8-books-64.png"></button>
         </li>
       </ul>
+      <div id="rightimgbox" class="absolute right-5">
+          <ul>
+          <li class="px-4 py-2">
+              <img src="../assets/bg/nurse.jpg" width="200" height="200">
+          </li>
+              
+          <li class="px-4 py-2">
+              <img src="../assets/bg/nurse2.jpg" width="200" height="200">
+          </li>
+
+          <li class="px-4 py-2">
+              <img src="../assets/bg/nurse3.jpg" width="200" height="200">
+          </li>
+         </ul>
+      </div>
+      
 
     
       <futurePlans @update:answer="storeAnswers" v-if="activeSet === 'futurePlans'" /> 
@@ -274,6 +290,10 @@ li:focus-visible{
     background-color: skyblue;
 }
 */
+.rightimgbox {
+    
+    nav-up: 100px;
+}
 
 .box-button {
     display: flex;
