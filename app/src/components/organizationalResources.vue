@@ -45,8 +45,6 @@
             </div>
 
 
-        <div>{{organizationalResourcesAnswers}}</div>
-
       </div>
 </template>
 
