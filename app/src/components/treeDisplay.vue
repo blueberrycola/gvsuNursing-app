@@ -1,8 +1,7 @@
 <template>
-  <div id = "decision-tree-page" class="bg-blue-200 h-screen w-screen">
+  <div id = "decision-tree-page" class="bg-blue-500 h-screen w-screen">
       <Header />  
-
-      <button class="absolute right-5 bottom-2 bg-black text-white" @click="storePDF()">Save PDF</button>
+      <button id="save-pdf" class="absolute right-5 bottom-2 bg-black text-white my-small-btn" @click="storePDF()">Save PDF</button>
     
     
       <ul class="w-25% absolute justify-left">
@@ -31,9 +30,6 @@
               <img src="../assets/bg/nurse.jpg" width="200" height="200">
           </li>
               
-          <li class="px-4 py-2">
-              <img src="../assets/bg/nurse2.jpg" width="200" height="200">
-          </li>
 
           <li class="px-4 py-2">
               <img src="../assets/bg/nurse3.jpg" width="200" height="200">
@@ -199,12 +195,10 @@ function showResults() {
 </script>
 
 <style>
-/*
-.decision-tree-page {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
+
+.my-small-btn {
+    width: 75px;
+    height: 75px;
 }
 /*
 .tree-container {
